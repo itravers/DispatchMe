@@ -1,11 +1,14 @@
 extends layout
 
 block content
+  link(href='/stylesheets/jquery-ui.css', rel='stylesheet')
   script(src='/javascripts/jquery.min.js')
+  script(src='/javascripts/jquery-ui.js')
   script(src='/javascripts/angular.js')
   script(src='/javascripts/schedules/datePicker.js')
   h1= title
   p Welcome to #{title}
   form
-    input(type="text", id="pickDate")
+    input(type='text', id='datePicker')
+  div(id='dateOutput')
   

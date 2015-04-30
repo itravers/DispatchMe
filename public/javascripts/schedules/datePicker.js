@@ -1,5 +1,3 @@
-  $(function() {
-    $( "#datepicker" ).datepicker({
-      showButtonPanel: true
-    });
-  });
+$(function() {
+			$("#datePicker").datepicker();
+		});
