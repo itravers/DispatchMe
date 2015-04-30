@@ -31,3 +31,7 @@ data
 .project
 
 .settings
+
+.jshintrc
+
+.tern-project
