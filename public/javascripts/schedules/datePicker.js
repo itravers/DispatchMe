@@ -1,3 +1,5 @@
-/**
- * New node file
- */
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showButtonPanel: true
+    });
+  });
