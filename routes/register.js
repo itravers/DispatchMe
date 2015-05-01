@@ -10,6 +10,10 @@ var express = require('express');
 var router = express.Router();
 
 /** GET Routes *********************************************************/
+/** Get Main Register Page */
+router.get('/', function(req, res, next) {
+	res.render('auth-register.jade', { title: 'Register'});
+});
 
 /** Helper Functions *************************************************/
 
