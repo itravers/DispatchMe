@@ -9,6 +9,10 @@
 /** App Variables ******************************************************/
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
+
+/** Middleware **********************************************************/
+router.use(bodyParser.urlencoded({extended: true}));
 
 /** GET Routes *********************************************************/
 /** Get Main User Index Page */
@@ -34,6 +38,11 @@ router.get('/logout', function(req, res, next) {
 /** Get Main Register Page */
 router.get('/dashboard', function(req, res, next) {
 	res.render('dashboard.jade', { title: 'dashboard'});
+});
+
+/** Post Routes ******************************************************/
+router.post('/register', function(req, res){
+	res.json(req.body);
 });
 
 /** Helper Functions *************************************************/
