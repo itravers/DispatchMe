@@ -7,12 +7,13 @@ block content
   script(src='/javascripts/jquery-ui.js')
   script(src='/javascripts/jquery.ui.timepicker.js')
   script(src='/javascripts/angular.js')
+  script(type='text/javascript').
+    var deactivatedDays =!{JSON.stringify(deactivatedDays)};
   script(src='/javascripts/schedules/datePicker.js')
   script(src='/javascripts/schedules/timePicker.js')
   h1= title
   p Welcome to #{title}
-  form
-    input(type='text', id='datePicker')
+  form(data-ng-app="timePickerApp", data-ng-controller="timePickerCtrl")
+    input(type='text', id='datePicker', data-ng-model="pickedDate")
     input(type='text', id='timePicker')
-  div(id='dateOutput')
   
