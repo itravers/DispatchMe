@@ -12,6 +12,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var sessions = require('client-sessions');
+var bcrypt = require('bcryptjs');
 
 /** Data Schema's *******************************************************/
 var Schema = mongoose.Schema;
