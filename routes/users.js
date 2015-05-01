@@ -17,11 +17,11 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var User = mongoose.model('User', new Schema({
-	id: ObjectID,
+	id: ObjectId,
 	firstName: String,
 	lastName: String,
 	email: {type: String, unique: true},
-	password: String
+	password: String,
 }));
 
 mongoose.connect('mongodb://localhost/DispatchMe');
@@ -56,7 +56,23 @@ router.get('/dashboard', function(req, res, next) {
 
 /** Post Routes ******************************************************/
 router.post('/register', function(req, res){
-	res.json(req.body);
+	var user = new User({
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		email: req.body.email,
+		password: req.body.password,
+	});
+	user.save(function(err){
+		if(err){
+			var error = 'An error has occurred. ';
+			if(err.code === 11000){
+				error = 'That Email is already taken, try another one.';
+			}
+			res.render('auth-register.jade', {error: error});
+		}else{
+			res.redirect('/users/dashboard');
+		}
+	});
 });
 
 /** Helper Functions *************************************************/
