@@ -12,8 +12,6 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 	$scope.pickedDate = "2015-04-29";
 	$scope.deactivatedHours = "";
     $scope.deactivatedDays = deactivatedDays;
-    
-    
     deactivateDays();
     
 		
@@ -25,9 +23,8 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 			    return [ array.indexOf(string) == -1 ];
 			},
 			onSelect: function(selectedDate) {
-			    // custom callback logic here
-			   // alert(selectedDate);
-				loadDeactivatedHours();
+				
+				loadDeactivatedHours(selectedDate);
 			  }
 		});
 	}
@@ -54,9 +51,10 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 	    });
 	}
 	
-	 function loadDeactivatedHours() {
+	 function loadDeactivatedHours(selectedDate) {
+		 
 	        // The friendService returns a promise.
-	    	dataService.getData("/schedules/deactivatedHours.json")
+	    	dataService.getData("/schedules/deactivatedHours.json", selectedDate)
 	            .then(
 	                function( data) {
 	                	$scope.deactivatedHours = data.deactivatedHours;
@@ -79,12 +77,14 @@ app.service(
             // PUBLIC METHODS.
             // ---
             
-            function getData(myurl) {
+            function getData(myurl, selectedDate) {
+            	//alert("selectedDate " + selectedDate);
                 var request = $http({
                     method: "get",
                     url: myurl,
                     params: {
-                        action: "get"
+                        action: "get",
+                        selectedDate: selectedDate
                     }
                 });
                 return( request.then( handleSuccess, handleError ) );
