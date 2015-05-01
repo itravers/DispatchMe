@@ -75,6 +75,20 @@ router.post('/register', function(req, res){
 	});
 });
 
+router.post('/login', function(req, res){
+	User.findOne({email: req.body.email}, function(err, user){
+		if(!user){
+			res.render('auth-login.jade', {error: 'Invalid email or password.'});
+		}else{
+			if(req.body.password === user.password){
+				res.redirect('/users/dashboard');
+			}else{
+				res.render('auth-login.jade', {error: 'Invalid email or password.'});
+			}
+		}
+	});
+});
+
 /** Helper Functions *************************************************/
 
 module.exports = router; //Export this router to the main app
