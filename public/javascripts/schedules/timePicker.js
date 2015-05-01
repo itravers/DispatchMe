@@ -45,7 +45,7 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 			  * @returns {Array}*/
 			beforeShowDay: function(date){
 				var array = $scope.deactivatedDays;
-				var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+				var string = jQuery.datepicker.formatDate('mm/dd/yy', date);
 				return [ array.indexOf(string) == -1 ];
 			},
 			/** Is Triggered when a day is selected, trigs ajax call which updates timepicker
