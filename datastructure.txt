@@ -18,3 +18,9 @@ deactivatedDays = {
 	days:["4/15/2015", "05/14/2015", "05/17/2015", "05/16/2015"]
 }
 db.deactivatedDays.insert(deactivatedDays)
+
+user1 = {
+	email: 'itravers@itravers.itravers', password: 'passhere'
+}
+
+db.users.insert(user1);

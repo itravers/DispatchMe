@@ -10,7 +10,21 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
+/** Data Schema's *******************************************************/
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
+var User = mongoose.model('User', new Schema({
+	id: ObjectID,
+	firstName: String,
+	lastName: String,
+	email: {type: String, unique: true},
+	password: String
+}));
+
+mongoose.connect('mongodb://localhost/DispatchMe');
 /** Middleware **********************************************************/
 router.use(bodyParser.urlencoded({extended: true}));
 
