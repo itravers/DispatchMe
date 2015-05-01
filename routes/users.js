@@ -77,11 +77,12 @@ router.get('/dashboard', function(req, res, next) {
 
 /** Post Routes ******************************************************/
 router.post('/register', function(req, res){
+	var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 	var user = new User({
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
 		email: req.body.email,
-		password: req.body.password,
+		password: hash,
 	});
 	user.save(function(err){
 		if(err){
@@ -101,7 +102,7 @@ router.post('/login', function(req, res){
 		if(!user){
 			res.render('auth-login.jade', {error: 'Invalid email or password.'});
 		}else{
-			if(req.body.password === user.password){
+			if(bcrypt.compareSynch(res.body.password, user.password)){
 				req.session.user = user; //set-coockie: session={email: '.', password: '.', etc:
 				res.redirect('/users/dashboard');
 			}else{
