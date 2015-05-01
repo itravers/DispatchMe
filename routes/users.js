@@ -11,6 +11,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var sessions = require('client-sessions');
 
 /** Data Schema's *******************************************************/
 var Schema = mongoose.Schema;
@@ -27,6 +28,12 @@ var User = mongoose.model('User', new Schema({
 mongoose.connect('mongodb://localhost/DispatchMe');
 /** Middleware **********************************************************/
 router.use(bodyParser.urlencoded({extended: true}));
+router.use(sessions({
+	cookieName: 'session',
+	secret: 'tyrannosaurusrex112358132134',
+	duration: 30 * 60 * 1000,
+	activeDuration: 5 * 60 * 1000,
+}));
 
 /** GET Routes *********************************************************/
 /** Get Main User Index Page */
@@ -46,12 +53,25 @@ router.get('/login', function(req, res, next) {
 
 /** Get Main Logout Page */
 router.get('/logout', function(req, res, next) {
+	req.session.reset();
 	res.redirect('/');
 });
 
 /** Get Main Register Page */
 router.get('/dashboard', function(req, res, next) {
-	res.render('dashboard.jade', { title: 'dashboard'});
+	if(req.session && req.session.user){
+		User.findOne({email: req.session.user.email }, function(err, user){
+			if(!user){
+				req.session.reset();
+				res.redirect('/users/login');
+			}else{
+				res.locals.user = user;
+				res.render('dashboard.jade');
+			}
+		});
+	}else{
+		res.redirect('/users/login');
+	}
 });
 
 /** Post Routes ******************************************************/
@@ -81,6 +101,7 @@ router.post('/login', function(req, res){
 			res.render('auth-login.jade', {error: 'Invalid email or password.'});
 		}else{
 			if(req.body.password === user.password){
+				req.session.user = user; //set-coockie: session={email: '.', password: '.', etc:
 				res.redirect('/users/dashboard');
 			}else{
 				res.render('auth-login.jade', {error: 'Invalid email or password.'});
