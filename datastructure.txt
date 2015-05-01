@@ -1,0 +1,6 @@
+dH = {
+	date: "04/14/2015",
+	hours: [8, 9, 12, 15]
+}
+
+db.deactivatedHours.insert(dH);

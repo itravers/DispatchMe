@@ -14,7 +14,7 @@ function getDeactivatedDays(){
  * This function will query the database for a list of deactivated hours.
  * @returns {Array} The list of deactivated hours.
  */
-function getDeactivatedHours(selectedDate, req){
+function getDeactivatedHours(selectedDate, req, res){
 	console.log("getDeactivatedHours()");
 	var db = req.db;
 	var c = db.get('deactivatedHours');
@@ -24,10 +24,8 @@ function getDeactivatedHours(selectedDate, req){
 	c.find({},{}, function(e, docs){
 		console.log("query db: " + docs);
 		doc = docs;
+		res.send({ "deactivatedHours" : doc[0].hours});
 	});
-	//var deactivatedHours = [12, 13, 14, 15, 16];
-	console.log("returning doc.hours: " + doc);
-	return doc.hours;
 }
 
 /* GET users listing. */
@@ -40,7 +38,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/deactivatedDays.json', function(req, res, next){
-	var deactivatedDays = getDeactivatedDays();
+	var deactivatedDays = getDeactivatedDays(req, res);
 	res.send({ "deactivatedDays" : deactivatedDays});
 });
 
@@ -50,8 +48,8 @@ router.get('/deactivatedHours.json', function(req, res, next){
 	if(selectedDate == undefined){
 		
 	}//selectedDate = getDate();
-	var deactivatedHours = getDeactivatedHours(selectedDate, req);
-	res.send({ "deactivatedHours" : deactivatedHours});
+	getDeactivatedHours(selectedDate, req, res);
+	
 });
 
 
