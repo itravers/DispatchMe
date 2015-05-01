@@ -27,6 +27,9 @@ app.controller('timePickerCtrl', function($scope, $http) {
 	function deactivateHours(){
 		$('#timePicker').timepicker({
 	        showPeriod: true,
+	        minutes: {
+	            interval: 15
+	        },
 	        onHourShow: function(hour){
 	        	if ((hour > 20) || (hour < 6)) {
 	                return false; // not valid

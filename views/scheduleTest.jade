@@ -12,7 +12,7 @@ block content
   script(src='/javascripts/schedules/timePicker.js')
   h1= title
   p Welcome to #{title}
-  form(data-ng-app="timePickerApp", data-ng-controller="timePickerCtrl")
-    input(type='text', id='datePicker', data-ng-model="pickedDate")
-    input(type='text', id='timePicker')
+  div(data-ng-app="timePickerApp", data-ng-controller="timePickerCtrl")
+    div(type='text', id='datePicker', data-ng-model="pickedDate")
+    div(type='text', id='timePicker')
   
