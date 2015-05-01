@@ -13,6 +13,7 @@ var db = monk('localhost:27017/DispatchMe');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var schedules = require('./routes/schedules');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/users', users);
 app.use('/schedules', schedules);
+app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
