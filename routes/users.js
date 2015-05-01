@@ -11,7 +11,7 @@ var express = require('express');
 var router = express.Router();
 
 /** GET Routes *********************************************************/
-/** Get Main Register Page */
+/** Get Main User Index Page */
 router.get('/', function(req, res, next) {
 	res.render('auth-index.jade', { title: 'Index'});
 });
@@ -21,9 +21,19 @@ router.get('/register', function(req, res, next) {
 	res.render('auth-register.jade', { title: 'Register'});
 });
 
-/** Get Main Register Page */
+/** Get Main Login Page */
 router.get('/login', function(req, res, next) {
 	res.render('auth-login.jade', { title: 'Login'});
+});
+
+/** Get Main Logout Page */
+router.get('/logout', function(req, res, next) {
+	res.redirect('/');
+});
+
+/** Get Main Register Page */
+router.get('/dashboard', function(req, res, next) {
+	res.render('dashboard.jade', { title: 'dashboard'});
 });
 
 /** Helper Functions *************************************************/
