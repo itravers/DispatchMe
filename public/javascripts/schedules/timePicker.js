@@ -1,6 +1,7 @@
 /**
  * Name: timePicker.js
  * Author: Isaac Assegai
+ * Date: 5/1/2015
  * Purpose: Keep track of and control the visual scheduling system.
  */
 
@@ -48,11 +49,20 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 				var string = jQuery.datepicker.formatDate('mm/dd/yy', date);
 				return [ array.indexOf(string) == -1 ];
 			},
+			/** Is Triggered when changing the month or year
+			  * @param year The year changed to.
+			  * @param month The month changed to.
+			  * @param inst A reference to this datePicker? */
+			onChangeMonthYear: function(year, month, inst){
+				//Looks like We don't actually need to do anything here now.
+			},
 			/** Is Triggered when a day is selected, trigs ajax call which updates timepicker
 			 * @param selectedDate The day selected. */
 			onSelect: function(selectedDate) {
 				loadDeactivatedHours(selectedDate); //Start the ajax call and update timepicker
-			}
+			},
+      changeMonth: true,
+      changeYear: true
 		});
 	}
 	

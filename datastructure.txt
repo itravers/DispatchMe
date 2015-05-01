@@ -1,4 +1,5 @@
 db.deactivatedHours.drop()
+db.deactivatedDays.drop()
 
 dH = {
 	date: "05/14/2015",
@@ -14,6 +15,6 @@ db.deactivatedHours.insert(dH);
 db.deactivatedHours.insert(dH2);
 
 deactivatedDays = {
-	days:["05/14/2015", "05/17/2015", "05/16/2015"]
+	days:["4/15/2015", "05/14/2015", "05/17/2015", "05/16/2015"]
 }
 db.deactivatedDays.insert(deactivatedDays)
