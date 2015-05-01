@@ -54,11 +54,11 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 	}
 	
 	function setupTimePicker(){
-		$('#timePicker').remove();
-		$( "#timePickerContainer" ).html( "<div id='timePicker'></div>");
-				$('#timePicker').timepicker($scope.timePickerOptions);
-				$('#timePicker').fadeOut();
-				$('#timePicker').fadeIn();
+		$('#timePicker').remove(); //remove timepicker and everything attached to it
+		$( "#timePickerContainer" ).html( "<div id='timePicker'></div>"); //instantiate a new timepicker in the dom
+		$('#timePicker').fadeOut();
+		$('#timePicker').timepicker($scope.timePickerOptions);//wire up the new timepicker
+		$('#timePicker').fadeIn();
 		
 		//$scope.timePicker = $('#timePicker');
 		//$('#timePicker').onHourShow();
