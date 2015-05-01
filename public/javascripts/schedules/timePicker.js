@@ -5,13 +5,34 @@
 
 
 var app = angular.module("timePickerApp", []); 
-var timePickerScope;
 
 //ANGULAR STUFF=====================================================
 app.controller('timePickerCtrl', function($scope, $http, dataService) {
 	$scope.pickedDate = "2015-04-29";
 	$scope.deactivatedHours = "";
     $scope.deactivatedDays = deactivatedDays;
+    $scope.timePickerOptions ={
+        showPeriod: true,
+        minutes: {
+            interval: 15
+        },
+        onHourShow: function(hour){
+        	if(isInArray(hour, $scope.deactivatedHours)){
+        		return false;
+        	}else{
+        		return true;
+        	}
+        },
+        onMinuteShow: function(hour, minute){
+        	if ((hour == 20) && (minute >= 30)) { return false; } // not valid
+            if ((hour == 6) && (minute < 30)) { return false; }   // not valid
+            return true;  // valid
+        },
+        beforeShow: function(){
+        	//loadDeactivatedHours("2015-04-29");
+        }
+    };
+    //setupTimePicker();
     deactivateDays();
     
 		
@@ -23,32 +44,24 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 			    return [ array.indexOf(string) == -1 ];
 			},
 			onSelect: function(selectedDate) {
-				
+				//
 				loadDeactivatedHours(selectedDate);
+				//$scope.timePicker.setTime(6);
+				//$('#timePicker').timepicker('setTime', 6);
+				//('#timePicker').showHour();
 			  }
 		});
 	}
 	
-	function deactivateHours(){
+	function setupTimePicker(){
+		$('#timePicker').remove();
+		$( "#timePickerContainer" ).html( "<div id='timePicker'></div>");
+				$('#timePicker').timepicker($scope.timePickerOptions);
+				$('#timePicker').fadeOut();
+				$('#timePicker').fadeIn();
 		
-		$('#timePicker').timepicker({
-	        showPeriod: true,
-	        minutes: {
-	            interval: 15
-	        },
-	        onHourShow: function(hour){
-	        	if(isInArray(hour, $scope.deactivatedHours)){
-	        		return false;
-	        	}else{
-	        		return true;
-	        	}
-	        },
-	        onMinuteShow: function(hour, minute){
-	        	if ((hour == 20) && (minute >= 30)) { return false; } // not valid
-	            if ((hour == 6) && (minute < 30)) { return false; }   // not valid
-	            return true;  // valid
-	        }
-	    });
+		//$scope.timePicker = $('#timePicker');
+		//$('#timePicker').onHourShow();
 	}
 	
 	 function loadDeactivatedHours(selectedDate) {
@@ -58,12 +71,18 @@ app.controller('timePickerCtrl', function($scope, $http, dataService) {
 	            .then(
 	                function( data) {
 	                	$scope.deactivatedHours = data.deactivatedHours;
-	                	deactivateHours();
+	                	setupTimePicker();
+	                	//setDeactivatedHours();
+	                	//deactivateHours();
 	                }
 	            )
 	        ;
 	    	
 	    }
+	 
+	 function setDeactivatedHours(){
+		
+	 }
 	
 });
 

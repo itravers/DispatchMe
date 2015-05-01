@@ -14,5 +14,6 @@ block content
   p Welcome to #{title}
   div(data-ng-app="timePickerApp", data-ng-controller="timePickerCtrl")
     div(type='text', id='datePicker', data-ng-model="pickedDate")
-    div(type='text', id='timePicker')
+    div(id='timePickerContainer')
+      div(type='text', id='timePicker')
   

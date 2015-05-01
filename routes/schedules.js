@@ -19,12 +19,15 @@ function getDeactivatedHours(selectedDate, req, res){
 	var db = req.db;
 	var c = db.get('deactivatedHours');
 	console.log("c: " + c);
-	var doc;
 	
-	c.find({},{}, function(e, docs){
+	c.find({date: selectedDate},{}, function(e, docs){
 		console.log("query db: " + docs);
-		doc = docs;
-		res.send({ "deactivatedHours" : doc[0].hours});
+		if(docs.length >= 1){
+			res.send({ "deactivatedHours" : docs[0].hours});
+		}else{
+			res.send({ "deactivatedHours" : []});
+		}
+		
 	});
 }
 
