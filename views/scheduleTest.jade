@@ -1,11 +1,19 @@
 extends layout
 
 block content
+  link(href='/stylesheets/jquery-ui.css', rel='stylesheet')
+  link(href='/stylesheets/jquery.ui.timepicker.css', rel='stylesheet')
   script(src='/javascripts/jquery.min.js')
+  script(src='/javascripts/jquery-ui.js')
+  script(src='/javascripts/jquery.ui.timepicker.js')
   script(src='/javascripts/angular.js')
-  script(src='/javascripts/schedules/datePicker.js')
+  script(type='text/javascript').
+    var deactivatedDays =!{JSON.stringify(deactivatedDays)};
+  script(src='/javascripts/schedules/timePicker.js')
   h1= title
   p Welcome to #{title}
-  form
-    input(type="text", id="pickDate")
+  div(data-ng-app="timePickerApp", data-ng-controller="timePickerCtrl")
+    div(type='text', id='datePicker', data-ng-model="pickedDate")
+    div(id='timePickerContainer')
+      div(type='text', id='timePicker')
   
