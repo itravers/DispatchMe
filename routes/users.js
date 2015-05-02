@@ -146,22 +146,8 @@ router.post('/login/auth/facebook', passport.authenticate('facebook'));
 //authentication process by attempting to obtain an access token.  If
 //access was granted, the user will be logged in.  Otherwise,
 //authentication has failed.
-/*
-router.get('/login/auth/facebook/callback', 
-	passport.authenticate('facebook', { 
-		scope: ['email'],
-		successRedirect: '/',
-    failureRedirect: '/users/'
-	}),function(req, res, next){
-		  console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
-	    console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body));
-	    //res.send("sucks");
-	  }
-);*/
-
 //traditional route handler, passed req/res
 router.get('/login/auth/facebook/callback', function(req, res, next) {
-
   // generate the authenticate method and pass the req/res
   passport.authenticate('facebook',{
   	scope: ['email'],},
@@ -170,29 +156,10 @@ router.get('/login/auth/facebook/callback', function(req, res, next) {
     	if (!user) { return res.redirect('/'); 
     }
     	utils.createUserSession(req, res, user);
-    // req / res held in closure
-    //req.logIn(user, function(err) {
-    //  if (err) { return next(err); }
-    //  return res.send(user);
-    //});
     	res.render('dashboard.jade', {user:user});
-
   })(req, res, next);
-
 });
 
-
-/*router.get('/login/auth/facebook/callback', 
-	  passport.authenticate('facebook', { successRedirect: '/',
-	                                      failureRedirect: '/users/',
-	                                      failureFlash: true}));
-*/
-/*router.get('/login/auth/facebook/callback', function(req, res){
-	passport.authenticate('facebook', { 
-		successRedirect: '/users/',
-		failureRedirect: '/users/login' });
-});
-*/
 router.post('/login', function(req, res) {
   models.User.findOne({ email: req.body.email }, 'firstName lastName email password data', function(err, user) {
     if (!user) {
