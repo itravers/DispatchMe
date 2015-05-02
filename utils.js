@@ -42,8 +42,8 @@ module.exports.createUserSession = function(req, res, user) {
   req.user = cleanUser;
   if(!res.locals){
   	res.locals = {};
-  	res.locals.user = cleanUser;
   }
+  res.locals.user = cleanUser;
 };
 
 /**

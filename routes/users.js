@@ -19,15 +19,22 @@ var utils = require('../utils');
 var passport = require('passport')
 , FacebookStrategy = require('passport-facebook').Strategy;
 
+/** MiddleWare ***********************************************************/
+
+/** Needed by passport to serial user, we don't use it, but still need the stub*/
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
+/** Needed by passport to serial user, we don't use it, but still need the stub*/
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-//Use facebook strategy
+/**
+ * Facebook Strategy to login. Finds facebook ID and checks for it in our user database.
+ * if it doesn't find it it will make a new user with that facebook id
+ */
 passport.use(new FacebookStrategy({
         clientID: "1576833329233718",
         clientSecret: "1ec1e145c288039ffcaf0087628332c0",
@@ -59,7 +66,7 @@ passport.use(new FacebookStrategy({
                     firstName: profile.name.givenName,
                     lastName: profile.name.familyName,
                     email: email,
-                    password: "facebookPass",
+                    password: bcrypt.hashSync("facebookPass", bcrypt.genSaltSync(10)),
                     username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
                     //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
