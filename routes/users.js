@@ -128,6 +128,8 @@ router.post('/register', function(req, res) {
     lastName:   req.body.lastName,
     email:      req.body.email,
     password:   hash,
+    username: req.body.firstName + " " + req.body.lastName,
+    provider: "dispatchmyself"
   });
   
   user.save(function(err) {
