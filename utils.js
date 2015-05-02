@@ -37,10 +37,13 @@ module.exports.createUserSession = function(req, res, user) {
     email:      user.email,
     data:       user.data || {},
   };
-
+  console.log("createUserSession: " + JSON.stringify(cleanUser));
   req.session.user = cleanUser;
   req.user = cleanUser;
-  res.locals.user = cleanUser;
+  if(!res.locals){
+  	res.locals = {};
+  	res.locals.user = cleanUser;
+  }
 };
 
 /**

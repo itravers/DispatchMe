@@ -33,9 +33,10 @@ passport.use(new FacebookStrategy({
         clientSecret: "1ec1e145c288039ffcaf0087628332c0",
         callbackURL: "http://172.242.255.38:3000/users/login/auth/facebook/callback",
         //profileFields: ['id', 'name', 'emails'],
-        enableProof: true
+        enableProof: true,
+        passReqToCallback: true
     },
-    function(accessToken, refreshToken, profile, done) {
+    function(req, accessToken, refreshToken, profile, done) {
     	console.log("profile: " + JSON.stringify(profile));
         //check user table for anyone with a facebook ID of profile.id
         models.User.findOne({
@@ -64,6 +65,7 @@ passport.use(new FacebookStrategy({
                     //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
                     //facebook: profile._json
                 });
+                //utils.createUserSession(req, user, res);
                 user.save(function(err) {
                     if (err){
                     	console.log(err);
@@ -72,6 +74,7 @@ passport.use(new FacebookStrategy({
                 });
             } else {
                 //found user. Return
+            		//utils.createUserSession(req, user);
                 return done(err, user);
             }
         });
@@ -143,6 +146,7 @@ router.post('/login/auth/facebook', passport.authenticate('facebook'));
 //authentication process by attempting to obtain an access token.  If
 //access was granted, the user will be logged in.  Otherwise,
 //authentication has failed.
+/*
 router.get('/login/auth/facebook/callback', 
 	passport.authenticate('facebook', { 
 		scope: ['email'],
@@ -153,7 +157,29 @@ router.get('/login/auth/facebook/callback',
 	    console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body));
 	    //res.send("sucks");
 	  }
-);
+);*/
+
+//traditional route handler, passed req/res
+router.get('/login/auth/facebook/callback', function(req, res, next) {
+
+  // generate the authenticate method and pass the req/res
+  passport.authenticate('facebook',{
+  	scope: ['email'],},
+  	function(err, user, info) {
+    	if (err) { return next(err); }
+    	if (!user) { return res.redirect('/'); 
+    }
+    	utils.createUserSession(req, res, user);
+    // req / res held in closure
+    //req.logIn(user, function(err) {
+    //  if (err) { return next(err); }
+    //  return res.send(user);
+    //});
+    	res.render('dashboard.jade', {user:user});
+
+  })(req, res, next);
+
+});
 
 
 /*router.get('/login/auth/facebook/callback', 
