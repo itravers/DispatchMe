@@ -19,33 +19,50 @@ var utils = require('../utils');
 var passport = require('passport')
 , FacebookStrategy = require('passport-facebook').Strategy;
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 //Use facebook strategy
 passport.use(new FacebookStrategy({
         clientID: "1576833329233718",
         clientSecret: "1ec1e145c288039ffcaf0087628332c0",
-        callbackURL: "http://172.242.255.38:3000/users/login/auth/facebook/callback"
+        callbackURL: "http://172.242.255.38:3000/users/login/auth/facebook/callback",
+        //profileFields: ['id', 'name', 'emails'],
+        enableProof: true
     },
     function(accessToken, refreshToken, profile, done) {
+    	console.log("profile: " + JSON.stringify(profile));
         //check user table for anyone with a facebook ID of profile.id
         models.User.findOne({
-            'facebook.id': profile.id 
+            facebook_id: profile.id
         }, function(err, user) {
             if (err) {
             	  console.log("error in facebook strategy");
-                return next(err);
+                return done(err);
+            }
+            var email;
+            if(!profile.emails){
+            	email = profile.name.givenName + profile.name.familyName + "@dispatchmyself.com";
+            }else{
+            	email = profile.emails[0];
             }
             //No user was found... so create a new user with values from Facebook (all the profile. stuff)
             if (!user) {
                 user = new models.User({
-                    firstName: profile.displayName,
-                    lastName: "",
-                    email: profile.emails[0].value,
-                    password: "",
-                    username: profile.username,
+                	  facebook_id: profile.id,
+                    firstName: profile.name.givenName,
+                    lastName: profile.name.familyName,
+                    email: email,
+                    password: "facebookPass",
+                    username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
                     //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
-                    facebook: profile._json
+                    //facebook: profile._json
                 });
                 user.save(function(err) {
                     if (err){
@@ -128,11 +145,13 @@ router.post('/login/auth/facebook', passport.authenticate('facebook'));
 //authentication has failed.
 router.get('/login/auth/facebook/callback', 
 	passport.authenticate('facebook', { 
-		successRedirect: '/users/',
-		failureRedirect: '/users/login' }),function(req, res, next){
+		scope: ['email'],
+		successRedirect: '/',
+    failureRedirect: '/users/'
+	}),function(req, res, next){
 		  console.log("[OAuth2:redirect:query]:", JSON.stringify(req.query));
 	    console.log("[OAuth2:redirect:body]:", JSON.stringify(req.body));
-	    res.send("sucks");
+	    //res.send("sucks");
 	  }
 );
 

@@ -11,8 +11,8 @@ block body
   form(method="post", action="/users/login/auth/facebook")
     input(type="hidden", name="_csrf", value=csrfToken)
   
-    span Username:
-    input(type="text", name="username")
+    span Email:
+    input(type="text", name="username", required=true)
     br
     
     span Password:

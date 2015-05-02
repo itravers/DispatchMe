@@ -8,6 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var monk = require('monk');
 var db = monk('localhost:27017/DispatchMe');
+var passport = require('passport')
 //DB Connection.
 var mongo = require('mongodb');
 
@@ -63,6 +64,8 @@ module.exports.createApp = function() {
   // middleware
   //uncomment after placing your favicon in /public
   //app.use(favicon(__dirname + '/public/favicon.ico'));
+  app.use(passport.initialize());
+  app.use(passport.session()); 
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(cookieParser());
