@@ -18,6 +18,8 @@
     "mongoose": "*",
     "client-sessions": "*",
     "bcrypt": "*",
-    "csurf": "*"
+    "csurf": "*",
+    "passport": "*",
+    "passport-facebook": "*"
   }
 }

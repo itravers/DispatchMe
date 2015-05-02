@@ -73,6 +73,9 @@ module.exports.createApp = function() {
   	secret: 'keyboard cat',
   	duration: 30 * 60 * 1000,
   	activeDuration: 5 * 60 * 1000,
+  	httpOnly: true, //don't allow js access to cookie
+  	secure: false, //if true only allow cookies over https
+  	ephemeral: false //if true delete this cookie when browser is closed.
   }));
   
   app.use(csrf());

@@ -8,6 +8,18 @@ block body
   
   if error
     p ERROR: #{error}
+  form(method="post", action="/users/login/auth/facebook")
+    input(type="hidden", name="_csrf", value=csrfToken)
+  
+    span Username:
+    input(type="text", name="username")
+    br
+    
+    span Password:
+    input(type="password", name="password", required=true)
+    br
+    
+    input(type="submit", value="Facebook Login")
     
   form(method="post")
     input(type="hidden", name="_csrf", value=csrfToken)
