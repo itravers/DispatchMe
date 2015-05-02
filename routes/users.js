@@ -36,6 +36,30 @@ router.use(sessions({
 	activeDuration: 5 * 60 * 1000,
 }));
 
+router.use(function(req, res, next){
+	if(req.session && req.session.user){
+		User.findOne({email: req.session.user.email}, function(err, user){
+			if(user){
+				req.user = user;
+				delete req.user.password;
+				req.session.user = user;
+				res.locals.user = user;
+			}
+			next();
+		});
+	}else{
+		next();
+	}
+});
+
+function requireLogin(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}else{
+		next();
+	}
+};
+
 /** GET Routes *********************************************************/
 /** Get Main User Index Page */
 router.get('/', function(req, res, next) {
@@ -59,20 +83,8 @@ router.get('/logout', function(req, res, next) {
 });
 
 /** Get Main Register Page */
-router.get('/dashboard', function(req, res, next) {
-	if(req.session && req.session.user){
-		User.findOne({email: req.session.user.email }, function(err, user){
-			if(!user){
-				req.session.reset();
-				res.redirect('/users/login');
-			}else{
-				res.locals.user = user;
-				res.render('dashboard.jade');
-			}
-		});
-	}else{
-		res.redirect('/users/login');
-	}
+router.get('/dashboard', requireLogin, function(req, res, next) {
+	res.render('dashboard.jade');
 });
 
 /** Post Routes ******************************************************/
@@ -102,7 +114,7 @@ router.post('/login', function(req, res){
 		if(!user){
 			res.render('auth-login.jade', {error: 'Invalid email or password.'});
 		}else{
-			if(bcrypt.compareSynch(res.body.password, user.password)){
+			if(bcrypt.compareSync(req.body.password, user.password)){
 				req.session.user = user; //set-coockie: session={email: '.', password: '.', etc:
 				res.redirect('/users/dashboard');
 			}else{
