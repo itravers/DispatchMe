@@ -1,6 +1,6 @@
 {
   "name": "DispatchMe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -14,6 +14,12 @@
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
     "mongodb": "*",
-    "monk": "*"
+    "monk": "*",
+    "mongoose": "*",
+    "client-sessions": "*",
+    "bcrypt": "*",
+    "csurf": "*",
+    "passport": "*",
+    "passport-facebook": "*"
   }
 }
