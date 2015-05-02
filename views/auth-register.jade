@@ -8,6 +8,8 @@ block body
     p ERROR: #{error}
   h1 Create an Account
   form(method="post")
+    input(type="hidden", name="_csrf", value=csrfToken)
+  
     span First Name:
     input(type="text", name="firstName", required=true)
     br

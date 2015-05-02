@@ -25,12 +25,20 @@ router.get('/', function(req, res, next) {
 
 /** Get Main Register Page */
 router.get('/register', function(req, res, next) {
-	res.render('auth-register.jade', { title: 'Register'});
+	//res.render('auth-register.jade', { title: 'Register'});
+	res.render('auth-register.jade', {  
+		title: 'Register', 
+		csrfToken: req.csrfToken() 
+	});
 });
 
 /** Get Main Login Page */
 router.get('/login', function(req, res, next) {
-	res.render('auth-login.jade', { title: 'Login'});
+	//res.render('auth-login.jade', { title: 'Login'});
+	res.render('auth-login.jade', {  
+		title: 'Login', 
+		csrfToken: req.csrfToken() 
+	});
 });
 
 /** Get Main Logout Page */

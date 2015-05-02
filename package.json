@@ -17,6 +17,7 @@
     "monk": "*",
     "mongoose": "*",
     "client-sessions": "*",
-    "bcrypt": "*"
+    "bcrypt": "*",
+    "csurf": "*"
   }
 }

@@ -1,5 +1,5 @@
 var bodyParser = require('body-parser');
-//var csrf = require('csurf');
+var csrf = require('csurf');
 var express = require('express');
 var mongoose = require('mongoose');
 var session = require('client-sessions');
@@ -69,15 +69,16 @@ module.exports.createApp = function() {
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(session({
-  cookieName: 'session',
-  secret: 'keyboard cat',
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
-}));
+  	cookieName: 'session',
+  	secret: 'keyboard cat',
+  	duration: 30 * 60 * 1000,
+  	activeDuration: 5 * 60 * 1000,
+  }));
   
-app.use(middleware.simpleAuth);
-app.use(function(req, res, next){
-//Let requests and responses have access to the db
+  app.use(csrf());
+  app.use(middleware.simpleAuth);
+  app.use(function(req, res, next){
+  //Let requests and responses have access to the db
 	req.mongoose = mongoose;
   req.db = db;
   next();
