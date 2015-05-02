@@ -8,6 +8,7 @@
 
 /** App Variables ******************************************************/
 var express = require('express');
+var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -18,15 +19,9 @@ var bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var User = mongoose.model('User', new Schema({
-	id: ObjectId,
-	firstName: String,
-	lastName: String,
-	email: {type: String, unique: true},
-	password: String,
-}));
+var User = mongoose.model('User');
 
-mongoose.connect('mongodb://localhost/DispatchMe');
+//mongoose.connect('mongodb://localhost/DispatchMe');
 /** Middleware **********************************************************/
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(sessions({
@@ -36,29 +31,24 @@ router.use(sessions({
 	activeDuration: 5 * 60 * 1000,
 }));
 
-router.use(function(req, res, next){
-	if(req.session && req.session.user){
-		User.findOne({email: req.session.user.email}, function(err, user){
-			if(user){
-				req.user = user;
-				delete req.user.password;
-				req.session.user = user;
-				res.locals.user = user;
-			}
-			next();
-		});
-	}else{
-		next();
-	}
+/*
+router.use(function(req,res,next){
+    if(req.session && req.session.user){
+  		User.findOne({email: req.session.user.email}, function(err, user){
+  			if(user){
+  				req.user = user;
+  				delete req.user.password;
+  				req.session.user = user;
+  				res.locals.user = user;
+  			}
+  			next();
+  		});
+  	}else{
+  		next();
+  	}
 });
+*/
 
-function requireLogin(req, res, next){
-	if(!req.user){
-		res.redirect('/users/login');
-	}else{
-		next();
-	}
-};
 
 /** GET Routes *********************************************************/
 /** Get Main User Index Page */
@@ -82,10 +72,7 @@ router.get('/logout', function(req, res, next) {
 	res.redirect('/');
 });
 
-/** Get Main Register Page */
-router.get('/dashboard', requireLogin, function(req, res, next) {
-	res.render('dashboard.jade');
-});
+
 
 /** Post Routes ******************************************************/
 router.post('/register', function(req, res){
@@ -104,7 +91,7 @@ router.post('/register', function(req, res){
 			}
 			res.render('auth-register.jade', {error: error});
 		}else{
-			res.redirect('/users/dashboard');
+			res.redirect('/dashboard');
 		}
 	});
 });
@@ -116,7 +103,7 @@ router.post('/login', function(req, res){
 		}else{
 			if(bcrypt.compareSync(req.body.password, user.password)){
 				req.session.user = user; //set-coockie: session={email: '.', password: '.', etc:
-				res.redirect('/users/dashboard');
+				res.redirect('/dashboard');
 			}else{
 				res.render('auth-login.jade', {error: 'Invalid email or password.'});
 			}
@@ -125,5 +112,12 @@ router.post('/login', function(req, res){
 });
 
 /** Helper Functions *************************************************/
+function requireLogin(req, res, next){
+	if(!req.user){
+		res.redirect('/users/login');
+	}else{
+		next();
+	}
+}
 
 module.exports = router; //Export this router to the main app
