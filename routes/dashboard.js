@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var sessions = require('client-sessions');
 var bcrypt = require('bcryptjs');
+var utils = require('../utils');
+var models = require('../models');
 
 /** Data Schema's *******************************************************/
 var Schema = mongoose.Schema;
@@ -25,17 +27,9 @@ var User = mongoose.model('User');
 
 /** GET Routes *********************************************************/
 /** Get Dashboard Page */
-router.get('/', requireLogin, function(req, res, next) {
+router.get('/', utils.requireLogin, function(req, res, next) {
 	res.render('dashboard.jade');
 });
 
-/** Helper Functions *************************************************/
-function requireLogin(req, res, next){
-	if(!req.user){
-		res.redirect('/users/login');
-	}else{
-		next();
-	}
-}
 
 module.exports = router; //Export this router to the main app

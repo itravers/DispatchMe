@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var sessions = require('client-sessions');
 var bcrypt = require('bcryptjs');
+var models = require('../models');
+var utils = require('../utils');
 
 /** Data Schema's *******************************************************/
 var Schema = mongoose.Schema;
@@ -30,24 +32,6 @@ router.use(sessions({
 	duration: 30 * 60 * 1000,
 	activeDuration: 5 * 60 * 1000,
 }));
-
-/*
-router.use(function(req,res,next){
-    if(req.session && req.session.user){
-  		User.findOne({email: req.session.user.email}, function(err, user){
-  			if(user){
-  				req.user = user;
-  				delete req.user.password;
-  				req.session.user = user;
-  				res.locals.user = user;
-  			}
-  			next();
-  		});
-  	}else{
-  		next();
-  	}
-});
-*/
 
 
 /** GET Routes *********************************************************/
@@ -75,49 +59,45 @@ router.get('/logout', function(req, res, next) {
 
 
 /** Post Routes ******************************************************/
-router.post('/register', function(req, res){
-	var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-	var user = new User({
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		email: req.body.email,
-		password: hash,
-	});
-	user.save(function(err){
-		if(err){
-			var error = 'An error has occurred. ';
-			if(err.code === 11000){
-				error = 'That Email is already taken, try another one.';
-			}
-			res.render('auth-register.jade', {error: error});
-		}else{
-			res.redirect('/dashboard');
-		}
-	});
+router.post('/register', function(req, res) {
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(req.body.password, salt);
+
+  var user = new models.User({
+    firstName:  req.body.firstName,
+    lastName:   req.body.lastName,
+    email:      req.body.email,
+    password:   hash,
+  });
+  user.save(function(err) {
+    if (err) {
+      var error = 'Something bad happened! Please try again.';
+
+      if (err.code === 11000) {
+        error = 'That email is already taken, please try another.';
+      }
+
+      res.render('auth-register.jade', { error: error });
+    } else {
+      utils.createUserSession(req, res, user);
+      res.redirect('/dashboard');
+    }
+  });
 });
 
-router.post('/login', function(req, res){
-	User.findOne({email: req.body.email}, function(err, user){
-		if(!user){
-			res.render('auth-login.jade', {error: 'Invalid email or password.'});
-		}else{
-			if(bcrypt.compareSync(req.body.password, user.password)){
-				req.session.user = user; //set-coockie: session={email: '.', password: '.', etc:
-				res.redirect('/dashboard');
-			}else{
-				res.render('auth-login.jade', {error: 'Invalid email or password.'});
-			}
-		}
-	});
+router.post('/login', function(req, res) {
+  models.User.findOne({ email: req.body.email }, 'firstName lastName email password data', function(err, user) {
+    if (!user) {
+      res.render('auth-login.jade', { error: "Incorrect email / password." });
+    } else {
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        utils.createUserSession(req, res, user);
+        res.redirect('/dashboard');
+      } else {
+        res.render('auth-login.jade', { error: "Incorrect email / password."  });
+      }
+    }
+  });
 });
-
-/** Helper Functions *************************************************/
-function requireLogin(req, res, next){
-	if(!req.user){
-		res.redirect('/users/login');
-	}else{
-		next();
-	}
-}
 
 module.exports = router; //Export this router to the main app

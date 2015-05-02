@@ -4,6 +4,8 @@ block vars
   - var title = 'Register';
   
 block body
+  if error
+    p ERROR: #{error}
   h1 Create an Account
   form(method="post")
     span First Name:
