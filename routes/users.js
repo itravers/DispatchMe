@@ -17,23 +17,6 @@ var bcrypt = require('bcryptjs');
 var models = require('../models');
 var utils = require('../utils');
 
-/** Data Schema's *******************************************************/
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-
-var User = mongoose.model('User');
-
-//mongoose.connect('mongodb://localhost/DispatchMe');
-/** Middleware **********************************************************/
-router.use(bodyParser.urlencoded({extended: true}));
-router.use(sessions({
-	cookieName: 'session',
-	secret: 'tyrannosaurusrex112358132134',
-	duration: 30 * 60 * 1000,
-	activeDuration: 5 * 60 * 1000,
-}));
-
-
 /** GET Routes *********************************************************/
 /** Get Main User Index Page */
 router.get('/', function(req, res, next) {
@@ -56,8 +39,6 @@ router.get('/logout', function(req, res, next) {
 	res.redirect('/');
 });
 
-
-
 /** Post Routes ******************************************************/
 router.post('/register', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
@@ -69,14 +50,13 @@ router.post('/register', function(req, res) {
     email:      req.body.email,
     password:   hash,
   });
+  
   user.save(function(err) {
     if (err) {
       var error = 'Something bad happened! Please try again.';
-
       if (err.code === 11000) {
         error = 'That email is already taken, please try another.';
       }
-
       res.render('auth-register.jade', { error: error });
     } else {
       utils.createUserSession(req, res, user);
