@@ -70,7 +70,7 @@ passport.use(new FacebookStrategy({
                     password: bcrypt.hashSync("facebookPass", bcrypt.genSaltSync(10)),
                     username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
-                    permissions: ["suser"]
+                    permissions: ["user"]
                 });
                 //utils.createUserSession(req, user, res);
                 user.save(function(err) {
@@ -166,7 +166,7 @@ router.get('/login/auth/facebook/callback', function(req, res, next) {
     	if (!user) { return res.redirect('/'); 
     }
     	utils.createUserSession(req, res, user);
-    	res.render('dashboard.jade', {user:user});
+    	res.redirect('/dashboard');
   })(req, res, next);
 });
 

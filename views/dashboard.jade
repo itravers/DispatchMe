@@ -4,7 +4,9 @@ block vars
   - var title = 'Dashboard'
 
 block body
+  script(src='/javascripts/angular.js')
   script(src='/javascripts/dashboard.js')
+  
   h1 Dashboard
   div(class='fb-like', data-href='http://172.242.255.38:3000', data-width='450', data-layout='standard', data-action='like', data-show-faces='true', data-share='true')
   if user
