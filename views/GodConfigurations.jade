@@ -1,19 +1,23 @@
 block GodConfiguration
   h2 God Configurations
-  div(data-ng-app="GodConfigurationsApp", data-ng-controller="godConfigurationsCtrl")
+  div(data-ng-app="GodConfigurationsApp", data-ng-controller="GodConfigurationsCtrl")
+    p Configs:       #{JSON.stringify(configs)}
+    p AvailableLoginServices:  #{configs.AvailableLoginServices.hasOwnProperty('Twitter')}
     form(method="post", action="/configuration/GodConfiguration/set")
-      span Available Login Services:
-      label
-        input(type='checkBox', name="loginMethod", value="DispatchMyself") 
-        | DispatchMyself
-      label
-        input(type='checkBox', name="loginMethod", value="Facebook")
-        | Facebook
-      label
-        input(type='checkBox', name="loginMethod", value="Google") 
-        | Google
-      label
-        input(type='checkBox', name="loginMethod", value="Twitter") 
-        | Twitter
       br
+      if (configs.AvailableLoginServices)
+        span Available Login Services:
+        label
+          input(type='checkBox', name="loginMethod", value="DispatchMyself" checked=configs.AvailableLoginServices.hasOwnProperty('DispatchMyself')? 'checked': false) 
+          | DispatchMyself
+        label
+          input(type='checkBox', name="loginMethod", value="Facebook" checked=configs.AvailableLoginServices.hasOwnProperty('Facebook')? 'checked': false)
+          | Facebook
+        label
+          input(type='checkBox', name="loginMethod", value="Google" checked=configs.AvailableLoginServices.hasOwnProperty('Google')? 'checked': false) 
+          | Google
+        label
+          input(type='checkBox', name="loginMethod", value="Twitter" checked=configs.AvailableLoginServices.hasOwnProperty('Twitter')? 'checked': false) 
+          | Twitter
+        br
       input(type="submit")

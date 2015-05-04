@@ -28,8 +28,18 @@ var User = mongoose.model('User');
 /** GET Routes *********************************************************/
 /** Get Dashboard Page */
 router.get('/', utils.requireLogin, function(req, res, next) {
-	res.render('dashboard.jade');
+	var AvailableLoginServices = {
+			'Facebook' : true,
+			'DispatchMyself' : true};
+	var configs = {AvailableLoginServices: AvailableLoginServices};
+	
+	res.render('dashboard.jade', {configs: configs});
 });
+
+/*router.use(function(req, res, next){
+	res.user.configurations = [{name: "AvailableLoginServices", value:["DispatchMyself, Facebook"]}];
+	next();
+});*/
 
 
 module.exports = router; //Export this router to the main app
