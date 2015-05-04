@@ -5,16 +5,6 @@
  * Purpose: Keep track and control of the user dashboard.
  */
 
-/** Angular App ******************************************************/
-var GodConfigurationsApp = angular.module("GodConfigurationsApp", []);
-
-/** Angular Controller ***********************************************/
-GodConfigurationsApp.controller('GodConfigurationsCtrl', function($scope, $http) {
-	
-});
-
-
-
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;

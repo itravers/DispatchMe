@@ -20,6 +20,6 @@ block body
     p Data:       #{user.data}
     p Permissions: #{user.permissions}
     if ( user.permissions.indexOf("GOD") != -1 )
-      include ./GodConfigurations.jade
+      include ./Configurations.jade
     else
       p You Have Normal Permissions.
