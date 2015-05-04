@@ -8,16 +8,16 @@ block GodConfiguration
       if (configs.AvailableLoginServices)
         span Available Login Services:
         label
-          input(type='checkBox', name="loginMethod", value="DispatchMyself" checked=configs.AvailableLoginServices.hasOwnProperty('DispatchMyself')? 'checked': false) 
+          input(type='checkBox', name="loginMethod", value="DispatchMyself" checked=configs.AvailableLoginServices.hasOwnProperty('DispatchMyself')? true: false) 
           | DispatchMyself
         label
-          input(type='checkBox', name="loginMethod", value="Facebook" checked=configs.AvailableLoginServices.hasOwnProperty('Facebook')? 'checked': false)
+          input(type='checkBox', name="loginMethod", value="Facebook" checked=configs.AvailableLoginServices.hasOwnProperty('Facebook')? true: false)
           | Facebook
         label
-          input(type='checkBox', name="loginMethod", value="Google" checked=configs.AvailableLoginServices.hasOwnProperty('Google')? 'checked': false) 
+          input(type='checkBox', name="loginMethod", value="Google" checked=configs.AvailableLoginServices.hasOwnProperty('Google')? true: false) 
           | Google
         label
-          input(type='checkBox', name="loginMethod", value="Twitter" checked=configs.AvailableLoginServices.hasOwnProperty('Twitter')? 'checked': false) 
+          input(type='checkBox', name="loginMethod", value="Twitter" checked=configs.AvailableLoginServices.hasOwnProperty('Twitter')? true: false) 
           | Twitter
         br
       input(type="submit")
