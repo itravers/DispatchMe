@@ -10,16 +10,17 @@ block body
   h1 Dashboard
   div(class='fb-like', data-href='http://172.242.255.38:3000', data-width='450', data-layout='standard', data-action='like', data-show-faces='true', data-share='true')
   if user
-    a(href='/users/logout') Logout
-    p.
-      Welcome to your dashboard! You are now logged in.
-    h2 User Information
-    p First Name: #{user.firstName}
-    p Last Name:  #{user.lastName}
-    p Email:      #{user.email}
-    p Data:       #{user.data}
-    p Permissions: #{user.permissions}
-    if ( user.permissions.indexOf("GOD") != -1 )
-      include ./Configurations.jade
-    else
-      p You Have Normal Permissions.
+    div(data-ng-app="ConfigurationsApp", data-ng-controller="ConfigurationsCtrl")
+      a(href='/users/logout') Logout
+      p.
+        Welcome to your dashboard! You are now logged in.
+      h2 User Information
+      p First Name: #{user.firstName}
+      p Last Name:  #{user.lastName}
+      p Email:      #{user.email}
+      p Data:       #{user.data}
+      p Permissions: #{user.permissions}
+      if ( user.permissions.indexOf("GOD") != -1 )
+        include ./Configurations.jade
+      else
+        p You Have Normal Permissions.

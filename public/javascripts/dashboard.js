@@ -4,6 +4,13 @@
  * Date: 5/4/2015
  * Purpose: Keep track and control of the user dashboard.
  */
+/** Angular App ******************************************************/
+var ConfigurationsApp = angular.module("ConfigurationsApp", []);
+
+/** Angular Controller ***********************************************/
+ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http) {
+	
+});
 
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
