@@ -48,7 +48,8 @@ passport.use(new FacebookStrategy({
         //check user table for anyone with a facebook ID of profile.id
         models.User.findOne({
             facebook_id: profile.id
-        }, function(err, user) {
+        },'firstName lastName email password data permissions'
+        , function(err, user) {
             if (err) {
             	  console.log("error in facebook strategy");
                 return done(err);
@@ -69,9 +70,7 @@ passport.use(new FacebookStrategy({
                     password: bcrypt.hashSync("facebookPass", bcrypt.genSaltSync(10)),
                     username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
-                    permissions: ["user"]
-                    //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
-                    //facebook: profile._json
+                    permissions: ["suser"]
                 });
                 //utils.createUserSession(req, user, res);
                 user.save(function(err) {

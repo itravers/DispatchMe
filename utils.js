@@ -33,7 +33,7 @@ module.exports.createUserSession = function(req, res, user) {
     firstName:   user.firstName,
     lastName:    user.lastName,
     email:       user.email,
-    permissions: user.permissions || ["user"],
+    permissions: user.permissions,
     data:        user.data || {},
   };
   console.log("createUserSession: " + JSON.stringify(cleanUser));
@@ -68,7 +68,7 @@ module.exports.createApp = function() {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(session({ //Session cookie
   	cookieName: 'session',
-  	secret: 'keyboard cat',
+  	secret: 'tyrannosaurusrex1123581321',
   	duration: 30 * 60 * 1000,
   	activeDuration: 5 * 60 * 1000,
   	httpOnly: true, //don't allow js access to cookie
