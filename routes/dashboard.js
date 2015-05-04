@@ -33,7 +33,9 @@ router.get('/', utils.requireLogin, function(req, res, next) {
 			'DispatchMyself' : true};
 	var configs = {AvailableLoginServices: AvailableLoginServices};
 	
-	res.render('dashboard.jade', {configs: configs});
+	res.render('dashboard.jade', {
+	  configs: configs,
+	  csrfToken: req.csrfToken()});
 });
 
 /*router.use(function(req, res, next){

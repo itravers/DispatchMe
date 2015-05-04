@@ -3,20 +3,13 @@ block Configuration
   div
     p Configs:       #{JSON.stringify(configs)}
     form(method="post", action="/configuration/set")
+      input(type="hidden", name="_csrf", value=csrfToken)
       br
-      if (configs.AvailableLoginServices)
-        span Available Login Services:
-        label
-          input(type='checkBox', name="loginMethod", value="DispatchMyself" checked=configs.AvailableLoginServices.hasOwnProperty('DispatchMyself')? true: false) 
-          | DispatchMyself
-        label
-          input(type='checkBox', name="loginMethod", value="Facebook" checked=configs.AvailableLoginServices.hasOwnProperty('Facebook')? true: false)
-          | Facebook
-        label
-          input(type='checkBox', name="loginMethod", value="Google" checked=configs.AvailableLoginServices.hasOwnProperty('Google')? true: false) 
-          | Google
-        label
-          input(type='checkBox', name="loginMethod", value="Twitter" checked=configs.AvailableLoginServices.hasOwnProperty('Twitter')? true: false) 
-          | Twitter
-        br
-      input(type="submit")
+      label(ng-repeat="(configKey, configValue) in configs  track by $index")
+        div(ng-if="configKey == 'AvailableLoginServices'", id="availableLoginServices")
+          span Available Login Services:
+            label(ng-repeat="(lsKey, lsValue) in configValue")
+              input(type='checkBox' ng-model="lsValue")
+              | {{lsKey}}
+        
+      input(type="submit", data-ng-click="submitConfigsClick($event)")
