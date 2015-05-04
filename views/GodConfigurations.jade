@@ -1,0 +1,19 @@
+block GodConfiguration
+  h2 God Configurations
+  div(data-ng-app="GodConfigurationsApp", data-ng-controller="godConfigurationsCtrl")
+    form(method="post", action="/configuration/GodConfiguration/set")
+      span Available Login Services:
+      label
+        input(type='checkBox', name="loginMethod", value="DispatchMyself") 
+        | DispatchMyself
+      label
+        input(type='checkBox', name="loginMethod", value="Facebook")
+        | Facebook
+      label
+        input(type='checkBox', name="loginMethod", value="Google") 
+        | Google
+      label
+        input(type='checkBox', name="loginMethod", value="Twitter") 
+        | Twitter
+      br
+      input(type="submit")
