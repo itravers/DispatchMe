@@ -69,6 +69,7 @@ passport.use(new FacebookStrategy({
                     password: bcrypt.hashSync("facebookPass", bcrypt.genSaltSync(10)),
                     username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
+                    permissions: ["user"]
                     //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
                     //facebook: profile._json
                 });
@@ -129,7 +130,8 @@ router.post('/register', function(req, res) {
     email:      req.body.email,
     password:   hash,
     username: req.body.firstName + " " + req.body.lastName,
-    provider: "dispatchmyself"
+    provider: "dispatchmyself",
+    permissions: ["user"]
   });
   
   user.save(function(err) {
@@ -170,7 +172,7 @@ router.get('/login/auth/facebook/callback', function(req, res, next) {
 });
 
 router.post('/login', function(req, res) {
-  models.User.findOne({ email: req.body.email }, 'firstName lastName email password data', function(err, user) {
+  models.User.findOne({ email: req.body.email }, 'firstName lastName email password data permissions', function(err, user) {
     if (!user) {
       res.render('auth-login.jade', { error: "Incorrect email / password." });
     } else {

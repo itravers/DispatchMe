@@ -30,10 +30,11 @@ mongoose.connect('mongodb://localhost/DispatchMe');
  *  @param {Object} user - A user object. */
 module.exports.createUserSession = function(req, res, user) {
   var cleanUser = {
-    firstName:  user.firstName,
-    lastName:   user.lastName,
-    email:      user.email,
-    data:       user.data || {},
+    firstName:   user.firstName,
+    lastName:    user.lastName,
+    email:       user.email,
+    permissions: user.permissions || ["user"],
+    data:        user.data || {},
   };
   console.log("createUserSession: " + JSON.stringify(cleanUser));
   req.session.user = cleanUser;
