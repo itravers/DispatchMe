@@ -5,21 +5,26 @@
  * Purpose: Keep track and control of the user dashboard.
  */
 /** Angular App ******************************************************/
+
 var ConfigurationsApp = angular.module("ConfigurationsApp", []);
+
 
 /** Angular Controller ***********************************************/
 ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataService) {
   $scope.submitConfigsClick = submitConfigsClick;
-  var AvailableLoginServices = {
+  //$scope.configs = configs;
+  //var hello = configs;
+  ///$scope.configs = configs;
+  /*var AvailableLoginServices = {
       'Facebook' : true,
-      'DispatchMyself' : true,
+      'DispatchMyself' : false,
       'Google' : false,
       'Twitter' : false};
   $scope.configs = {
       AvailableLoginServices: AvailableLoginServices,
       ChangePassword : true
       };
-  
+  */
   
   /** Is Triggered for each minute in the timepicker 
    * @param selectedDate The date we are loading deactivated hours for */

@@ -30,7 +30,9 @@ var User = mongoose.model('User');
 router.get('/', utils.requireLogin, function(req, res, next) {
 	var AvailableLoginServices = {
 			'Facebook' : true,
-			'DispatchMyself' : true};
+			'DispatchMyself' : true,
+			'Google' : false,
+			'Twitter' : false};
 	var configs = {AvailableLoginServices: AvailableLoginServices};
 	
 	res.render('dashboard.jade', {
