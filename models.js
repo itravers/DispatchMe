@@ -29,7 +29,7 @@ module.exports.Config = mongoose.model('Config', new Schema({
 
 module.exports.ConfigCategory = mongoose.model('ConfigCategory', new Schema({
   id:           ObjectId,
-  name:         { type: String, required: 'ConfigurationsCategorys require a name'},
+  name:         { type: String, required: 'ConfigurationsCategorys require a name', unique: true },
   configs:      { type: Object},
   permissions:  { type: [String]}
 }));
