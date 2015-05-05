@@ -166,7 +166,7 @@ router.get('/login/auth/facebook/callback', function(req, res, next) {
     	if (!user) { return res.redirect('/'); 
     }
     	utils.createUserSession(req, res, user);
-    	res.redirect('/dashboard', {csrfToken: req.csrfToken()});
+    	res.redirect('/dashboard');
   })(req, res, next);
 });
 
@@ -177,7 +177,7 @@ router.post('/login', function(req, res) {
     } else {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         utils.createUserSession(req, res, user);
-        res.redirect('/dashboard', {csrfToken: req.csrfToken()});
+        res.redirect('/dashboard');
       } else {
         res.render('auth-login.jade', { error: "Incorrect email / password."  });
       }
