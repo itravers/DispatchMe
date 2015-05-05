@@ -34,31 +34,35 @@ router.get('/', utils.requireLogin, function(req, res, next) {
 			'Google' : false,
 			'Twitter' : false};
 	var configs = {AvailableLoginServices: AvailableLoginServices};*/
-  var configs = getConfigs();
+  getDataThenRender(req, res, next);
 	
-	res.render('dashboard.jade', {
-	  configs: configs,
-	  csrfToken: req.csrfToken()});
+	
 });
 
+function getDataThenRender(req, res, next){
+  getConfigsThenRender(req, res, next);
+}
 
-
-function getConfigs(){
+function getConfigsThenRender(req, res, next){
   console.log("getting configs");
   models.ConfigCategory.find({}, {}, function(err, ConfigCategory) {
     console.log(ConfigCategory);
+    
     if (ConfigCategory.length == 0) {
       console.log("ConfigCategory isn't found");
       var config = new models.Config({
         name: "Facebook",
-        value: true,
-        permissions: ["GOD"]
+        value: true
       });
       var configArray = [];
-      configArray.push(config);
+      configArray.push({name: "Facebook", value: true});
+      configArray.push({name: "DispatchMe", value: true});
+      configArray.push({name: "Google", value: false});
+      configArray.push({name: "Twitter", value: false});
       ConfigCategory = new models.ConfigCategory({
           name: "AvailableLoginServices",
-          configs: configArray
+          configs: configArray,
+          permissions: ["GOD"]
       });
       //utils.createUserSession(req, user, res);
       ConfigCategory.save(function(err) {
@@ -66,11 +70,12 @@ function getConfigs(){
           if (err){
             console.log(err);
           }
-          //return done(err, user);
+          //We just created a configcategory
       });
   } else {
-      //found user. Return
-      //return done(err, user);
+    res.render('dashboard.jade', {
+      configs: ConfigCategory,
+      csrfToken: req.csrfToken()});
   }
   });
 }

@@ -5,11 +5,11 @@ block Configuration
     form()
       input(type="hidden", name="_csrf", value=csrfToken)
       br
-      label(ng-repeat="(configKey, configValue) in configs  track by $index")
-        div(ng-if="configKey == 'AvailableLoginServices'", id="availableLoginServices")
-          span Available Login Services:
-            label(ng-repeat="(lsKey, lsValue) in configValue")
-              input(type='checkBox' ng-model="lsValue")
-              | {{lsKey}}
-        
+      label(ng-repeat="confCat in configs")
+        div(ng-if="confCat.name == 'AvailableLoginServices'", id="availableLoginServices")
+          div(ng-if="permissions.indexOf(confCat.permissions[0]) != -1")
+            span Available Login Services:
+            label(ng-repeat="config in confCat.configs")
+              input(type='checkBox' ng-model="config.value")
+              | {{config.name}}
       input(type="submit", data-ng-click="submitConfigsClick($event)")

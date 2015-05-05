@@ -24,12 +24,12 @@ module.exports.User = mongoose.model('User', new Schema({
 module.exports.Config = mongoose.model('Config', new Schema({
   id:           ObjectId,
   name:         { type: String, required: 'Configs require a Name'},
-  value:        { type: String, required: 'Configs require a Value'},
-  permissions:  { type: [String]}
+  value:        { type: Boolean, required: 'Configs require a Value'}
 }));
 
 module.exports.ConfigCategory = mongoose.model('ConfigCategory', new Schema({
   id:           ObjectId,
   name:         { type: String, required: 'ConfigurationsCategorys require a name'},
-  configs:      { type: Object}
+  configs:      { type: Object},
+  permissions:  { type: [String]}
 }));
