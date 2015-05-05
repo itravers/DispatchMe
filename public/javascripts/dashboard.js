@@ -23,7 +23,13 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
             .then(
               function( data){
                 alert("submittingAvailableLoginServicesClicked " + JSON.stringify(data));
-              
+                $scope.configs.statusText = data.statusText;
+                if(data.statusTextColor){
+                  $scope.configs.statusTextColor = data.statusTextColor;
+                }else{
+                  $scope.configs.statusTextColor = "Red";
+                }
+                
                 //$scope.deactivatedHours = data.deactivatedHours;
                 //setupTimePicker();
               }
