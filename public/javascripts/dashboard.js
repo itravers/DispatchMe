@@ -12,19 +12,6 @@ var ConfigurationsApp = angular.module("ConfigurationsApp", []);
 /** Angular Controller ***********************************************/
 ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataService) {
   $scope.submitConfigsClick = submitConfigsClick;
-  //$scope.configs = configs;
-  //var hello = configs;
-  ///$scope.configs = configs;
-  /*var AvailableLoginServices = {
-      'Facebook' : true,
-      'DispatchMyself' : false,
-      'Google' : false,
-      'Twitter' : false};
-  $scope.configs = {
-      AvailableLoginServices: AvailableLoginServices,
-      ChangePassword : true
-      };
-  */
   
   /** Is Triggered for each minute in the timepicker 
    * @param selectedDate The date we are loading deactivated hours for */
@@ -33,8 +20,8 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
         dataService.getData("/configurations/set", $scope.configs)
             .then(
               function( data) {
-                $scope.deactivatedHours = data.deactivatedHours;
-                setupTimePicker();
+                //$scope.deactivatedHours = data.deactivatedHours;
+                //setupTimePicker();
               }
         );
     }

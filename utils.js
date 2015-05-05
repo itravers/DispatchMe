@@ -36,7 +36,7 @@ module.exports.createUserSession = function(req, res, user) {
     permissions: user.permissions,
     data:        user.data || {},
   };
-  console.log("createUserSession: " + JSON.stringify(cleanUser));
+  //console.log("createUserSession: " + JSON.stringify(cleanUser));
   req.session.user = cleanUser;
   req.user = cleanUser;
   if(!res.locals){

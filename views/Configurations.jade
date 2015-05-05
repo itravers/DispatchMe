@@ -2,7 +2,7 @@ block Configuration
   h2 Configurations
   div
     p Configs:       #{JSON.stringify(configs)}
-    form(method="post", action="/configuration/set")
+    form()
       input(type="hidden", name="_csrf", value=csrfToken)
       br
       label(ng-repeat="(configKey, configValue) in configs  track by $index")

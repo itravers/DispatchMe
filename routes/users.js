@@ -44,7 +44,7 @@ passport.use(new FacebookStrategy({
         passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, done) {
-    	console.log("profile: " + JSON.stringify(profile));
+    	console.log(" login via facebook " + JSON.stringify(profile));
         //check user table for anyone with a facebook ID of profile.id
         models.User.findOne({
             facebook_id: profile.id
