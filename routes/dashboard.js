@@ -44,9 +44,9 @@ function getDataThenRender(req, res, next){
 }
 
 function getConfigsThenRender(req, res, next){
-  console.log("getting configs");
+  //console.log("getting configs");
   models.ConfigCategory.find({}, {}, function(err, ConfigCategory) {
-    console.log(ConfigCategory);
+    //console.log(ConfigCategory);
     
     if (ConfigCategory.length == 0) {
       console.log("ConfigCategory isn't found");

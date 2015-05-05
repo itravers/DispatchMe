@@ -10,10 +10,10 @@ router.get('/', function(req, res, next){
 
 /* Post to set a config value. */
 router.post('/set', function(req, res, next) {
-  console.log("god command to set configs "+ res);
+  console.log("god command to set configs "+ JSON.stringify(res));
 	res.send({
-	  statusText : "Save Complete",
-	  statusTextColor : "Blue"
+	  statusText : "Save Made Me Puke",
+	  statusTextColor : "Green"
 	});
 });
 

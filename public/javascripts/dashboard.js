@@ -92,7 +92,8 @@ ConfigurationsApp.service(
             /* Normalize the API reponse from the server if the server hasn't already done it. */
             if (!angular.isObject(response.data ) ||! response.data.message){
               //if(response.config.url === "/configuration/set"){
-              configAppScope.configs.error = "Error Setting Configs: " + response.statusText;
+              configAppScope.configs.statusTextColor = "Red";
+              configAppScope.configs.statusText = "Error Setting Configs: " + response.statusText;
              // }
                 return( $q.reject( "An unknown error occurred." ) );
             }

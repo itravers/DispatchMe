@@ -14,4 +14,4 @@ block Configuration
               input(type="hidden", name="_csrf", value="{{csrfToken}}")
               input(type='checkBox' ng-model="config.value")
               | {{config.name}}
-            input(type="submit", data-ng-click="submitAvailableLoginServicesClick($event)")
+            input(type="submit", data-ng-click="submitAvailableLoginServicesClick($event)", value="Save")
