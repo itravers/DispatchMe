@@ -5,6 +5,7 @@ block Configuration
     form()
       input(type="hidden", name="_csrf", value=csrfToken)
       br
+      h3(style="color:red;", id="configErrorOutput") {{configs.error}}
       label(ng-repeat="confCat in configs")
         div(ng-if="confCat.name == 'AvailableLoginServices'", id="availableLoginServices")
           div(ng-if="permissions.indexOf(confCat.permissions[0]) != -1")

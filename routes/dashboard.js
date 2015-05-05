@@ -68,7 +68,7 @@ function getConfigsThenRender(req, res, next){
       ConfigCategory.save(function(err) {
         console.log("saving ConfigCategory");
           if (err){
-            console.log(err);
+            console.log("Error saving ConfigCategory: "+err);
           }
           //We just created a configcategory
       });

@@ -7,11 +7,13 @@
 /** Angular App ******************************************************/
 
 var ConfigurationsApp = angular.module("ConfigurationsApp", []);
+var configAppScope;
 
 
 /** Angular Controller ***********************************************/
 ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataService) {
   $scope.submitAvailableLoginServicesClick = submitAvailableLoginServicesClick;
+  configAppScope = $scope;
   
   /** Is Triggered for each minute in the timepicker 
    * @param selectedDate The date we are loading deactivated hours for */
@@ -83,6 +85,9 @@ ConfigurationsApp.service(
         function handleError(response) {
             /* Normalize the API reponse from the server if the server hasn't already done it. */
             if (!angular.isObject(response.data ) ||! response.data.message){
+              //if(response.config.url === "/configuration/set"){
+              configAppScope.configs.error = "Error Setting Configs: " + response.statusText;
+             // }
                 return( $q.reject( "An unknown error occurred." ) );
             }
             // Otherwise, use expected error message.

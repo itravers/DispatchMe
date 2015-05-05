@@ -10,11 +10,11 @@ router.get('/', function(req, res, next){
 
 /* Post to set a config value. */
 router.post('/set', function(req, res, next) {
-  console.log("god command to set configs ");
-	res.send({
-	  error : "There was no error.",
-	  body: req.body
-	});
+  console.log("god command to set configs "+ res.session.permissions);
+	//res.send({
+	 // error : "There was no error.",
+	 // body: req.body
+	//});
 });
 
 module.exports = router;
