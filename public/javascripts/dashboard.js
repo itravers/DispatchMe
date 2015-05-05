@@ -20,7 +20,7 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
         dataService.setData("/configuration/set", $scope.configs, $scope.csrfToken)
             .then(
               function( data){
-                alert("submittingAvailableLoginServicesClicked " + data);
+                alert("submittingAvailableLoginServicesClicked " + JSON.stringify(data));
               
                 //$scope.deactivatedHours = data.deactivatedHours;
                 //setupTimePicker();
