@@ -11,15 +11,17 @@ var ConfigurationsApp = angular.module("ConfigurationsApp", []);
 
 /** Angular Controller ***********************************************/
 ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataService) {
-  $scope.submitConfigsClick = submitConfigsClick;
+  $scope.submitAvailableLoginServicesClick = submitAvailableLoginServicesClick;
   
   /** Is Triggered for each minute in the timepicker 
    * @param selectedDate The date we are loading deactivated hours for */
-    function submitConfigsClick($event) {
+    function submitAvailableLoginServicesClick($event) {
         //Our Data Service returns a promise and we then setup our timepicker.
-        dataService.getData("/configurations/set", $scope.configs)
+        dataService.setData("/configuration/set", $scope.configs)
             .then(
-              function( data) {
+              function( data){
+                alert("submittingAvailableLoginServicesClicked " + data);
+              
                 //$scope.deactivatedHours = data.deactivatedHours;
                 //setupTimePicker();
               }
@@ -32,7 +34,9 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
 ConfigurationsApp.service(
     "dataService",
     function( $http, $q ) {
-        return({getData: getData}); // Return public API.
+        return({
+          getData: getData,
+          setData: setData}); // Return public API.
         
         /* PUBLIC METHODS. */
         /** Ajax call that gets data about configs from the server
@@ -40,6 +44,7 @@ ConfigurationsApp.service(
        * @param configSetting The date we are asking date from. 
        * @returns {Array}*/
         function getData(myurl, configSetting) {
+          alert("getting data " + configSetting)
             var request = $http({
                 method: "get",
                 url: myurl,
@@ -56,14 +61,14 @@ ConfigurationsApp.service(
        * @param configSetting The date we are asking date from. 
        * @returns {Array}*/
         function setData(myurl, configSetting) {
+          
             var request = $http({
-                method: "post",
+                method: "POST",
                 url: myurl,
-                params: {
-                    action: "post",
-                    configSetting: configSetting
-                }
+                data: configSetting
+                
             });
+            alert("setting data " + JSON.stringify(request));
             return(request.then(handleSuccess, handleError));
         }
         

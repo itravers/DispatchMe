@@ -76,7 +76,7 @@ module.exports.createApp = function() {
   	ephemeral: false //if true delete this cookie when browser is closed.
   }));
   
-  app.use(csrf()); //cross site request forgery
+ // app.use(csrf()); //cross site request forgery
   app.use(middleware.simpleAuth);
   app.use(function(req, res, next){
 	req.mongoose = mongoose; //Let requests and responses have access to the db 
