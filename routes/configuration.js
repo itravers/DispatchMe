@@ -19,11 +19,6 @@ router.post('/set', function(req, res, next) {
 function setConfigs(req, res, next){
   for(var i = 0; i < req.body.configSetting.length; i++){
     var configCategory = req.body.configSetting[i];
-   /* var configCategoryToSave = new models.ConfigCategory({
-      name: configCategory.name, 
-      configs: configCategory.configs, 
-      permissions: configCategory.permissions
-    });*/
     
     models.ConfigCategory.findOneAndUpdate(
         {name: configCategory.name}, 
@@ -43,52 +38,6 @@ function setConfigs(req, res, next){
           }
         }
     );
-    
-    /*
-    configCategoryToSave.findOneAndUpdate(
-        {name: configCategory.name}, 
-        {configs: configCategory.configs, permissions: configCategory.permissions}, 
-        'name configs permissions', 
-        function(err, doc){
-          if (err) {
-            var error = 'Something bad happened! Please try again.';
-            if (err.code === 11000) {
-              error = 'That config is already in the DB?.';
-            }
-            res.send({
-              statusText : error,
-              statusTextColor : "Red"
-            });
-          } else {
-            res.send({
-              statusText : "Config Saved",
-              statusTextColor : "Green"
-            });
-          }
-        });
-    */
-   /* configCategoryToSave.save(function(err) {
-      if (err) {
-        var error = 'Something bad happened! Please try again.';
-        if (err.code === 11000) {
-          error = 'That config is already in the DB?.';
-        }
-        res.send({
-          statusText : error,
-          statusTextColor : "Red"
-        });
-      } else {
-        res.send({
-          statusText : "Config Saved",
-          statusTextColor : "Green"
-        });
-      }
-    });*/
-    
-    //for(var n = 0; n < configCategory.length; n++){
-      //var cFrontend = configCategory[n];
-      //var configToSave = new models.Config({name: cFrontend.name, value: cFrontend.value});
-    //}
     
     console.log("user submitted config category: " + configCategory.name);
   }

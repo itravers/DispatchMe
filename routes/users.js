@@ -105,11 +105,47 @@ router.get('/register', function(req, res, next) {
 
 /** Get Main Login Page */
 router.get('/login', function(req, res, next) {
+  //First retrieve the available login services.
+  models.ConfigCategory.findOne(
+      {name: "AvailableLoginServices"}, 
+      'name configs permissions', 
+      function(err, doc){
+        if(err || !doc){ //If there was an error, or no availableLoginServices found
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            error: "Issue Finding Login Services "+ err
+          });
+        }else{
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            availableLoginServices: doc
+          });
+        }
+      });
+  /*
+  models.ConfigCategory.findOne(
+      {name: "AvailableLoginServices"}, 
+      configCategory, 
+      {upsert:true}, 
+      function(err, doc){
+        if(err){
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            error: err
+          });
+        }else{
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() 
+          });
+        }
+      }
+  );*/
 	//res.render('auth-login.jade', { title: 'Login'});
-	res.render('auth-login.jade', {  
-		title: 'Login', 
-		csrfToken: req.csrfToken() 
-	});
+	
 });
 
 /** Get Main Logout Page */
