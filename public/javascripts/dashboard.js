@@ -22,7 +22,7 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
         dataService.setData("/configuration/set", $scope.configs, $scope.csrfToken)
             .then(
               function( data){
-                alert("submittingAvailableLoginServicesClicked " + JSON.stringify(data));
+               // alert("submittingAvailableLoginServicesClicked " + JSON.stringify(data));
                 $scope.configs.statusText = data.statusText;
                 if(data.statusTextColor){
                   $scope.configs.statusTextColor = data.statusTextColor;
@@ -52,7 +52,7 @@ ConfigurationsApp.service(
        * @param configSetting The date we are asking date from. 
        * @returns {Array}*/
         function getData(myurl, configSetting) {
-          alert("getting data " + configSetting);
+          //alert("getting data " + configSetting);
             var request = $http({
                 method: "get",
                 url: myurl,
@@ -80,7 +80,7 @@ ConfigurationsApp.service(
                 
                 
             });
-            alert("setting data " + JSON.stringify(request));
+            //alert("setting data " + JSON.stringify(request));
             return(request.then(handleSuccess, handleError));
         }
         
