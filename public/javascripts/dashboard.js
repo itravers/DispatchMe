@@ -17,7 +17,7 @@ ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataS
    * @param selectedDate The date we are loading deactivated hours for */
     function submitAvailableLoginServicesClick($event) {
         //Our Data Service returns a promise and we then setup our timepicker.
-        dataService.setData("/configuration/set", $scope.configs)
+        dataService.setData("/configuration/set", $scope.configs, $scope.csrfToken)
             .then(
               function( data){
                 alert("submittingAvailableLoginServicesClicked " + data);
@@ -44,7 +44,7 @@ ConfigurationsApp.service(
        * @param configSetting The date we are asking date from. 
        * @returns {Array}*/
         function getData(myurl, configSetting) {
-          alert("getting data " + configSetting)
+          alert("getting data " + configSetting);
             var request = $http({
                 method: "get",
                 url: myurl,
@@ -60,12 +60,16 @@ ConfigurationsApp.service(
        * @param myurl The Address we are posting the data to.
        * @param configSetting The date we are asking date from. 
        * @returns {Array}*/
-        function setData(myurl, configSetting) {
+        function setData(myurl, configSetting, csrfToken) {
           
             var request = $http({
                 method: "POST",
                 url: myurl,
-                data: configSetting
+                data: {
+                  configSetting: configSetting,
+                  _csrf: csrfToken
+                  }
+                
                 
             });
             alert("setting data " + JSON.stringify(request));
