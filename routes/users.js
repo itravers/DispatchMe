@@ -38,17 +38,18 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FacebookStrategy({
         clientID: "1576833329233718",
         clientSecret: "1ec1e145c288039ffcaf0087628332c0",
-        callbackURL: "http://172.242.255.38:3000/users/login/auth/facebook/callback",
+        callbackURL: "http://192.168.1.111:3000/users/login/auth/facebook/callback",
         //profileFields: ['id', 'name', 'emails'],
         enableProof: true,
         passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, done) {
-    	console.log("profile: " + JSON.stringify(profile));
+    	console.log(" login via facebook " + JSON.stringify(profile));
         //check user table for anyone with a facebook ID of profile.id
         models.User.findOne({
             facebook_id: profile.id
-        }, function(err, user) {
+        },'firstName lastName email password data permissions'
+        , function(err, user) {
             if (err) {
             	  console.log("error in facebook strategy");
                 return done(err);
@@ -69,8 +70,7 @@ passport.use(new FacebookStrategy({
                     password: bcrypt.hashSync("facebookPass", bcrypt.genSaltSync(10)),
                     username: profile.name.givenName+" "+profile.name.familyName,
                     provider: 'facebook',
-                    //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
-                    //facebook: profile._json
+                    permissions: ["user"]
                 });
                 //utils.createUserSession(req, user, res);
                 user.save(function(err) {
@@ -105,11 +105,47 @@ router.get('/register', function(req, res, next) {
 
 /** Get Main Login Page */
 router.get('/login', function(req, res, next) {
+  //First retrieve the available login services.
+  models.ConfigCategory.findOne(
+      {name: "AvailableLoginServices"}, 
+      'name configs permissions', 
+      function(err, doc){
+        if(err || !doc){ //If there was an error, or no availableLoginServices found
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            error: "Issue Finding Login Services "+ err
+          });
+        }else{
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            availableLoginServices: doc
+          });
+        }
+      });
+  /*
+  models.ConfigCategory.findOne(
+      {name: "AvailableLoginServices"}, 
+      configCategory, 
+      {upsert:true}, 
+      function(err, doc){
+        if(err){
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() ,
+            error: err
+          });
+        }else{
+          res.render('auth-login.jade', {  
+            title: 'Login', 
+            csrfToken: req.csrfToken() 
+          });
+        }
+      }
+  );*/
 	//res.render('auth-login.jade', { title: 'Login'});
-	res.render('auth-login.jade', {  
-		title: 'Login', 
-		csrfToken: req.csrfToken() 
-	});
+	
 });
 
 /** Get Main Logout Page */
@@ -129,7 +165,8 @@ router.post('/register', function(req, res) {
     email:      req.body.email,
     password:   hash,
     username: req.body.firstName + " " + req.body.lastName,
-    provider: "dispatchmyself"
+    provider: "dispatchmyself",
+    permissions: ["user"]
   });
   
   user.save(function(err) {
@@ -165,12 +202,12 @@ router.get('/login/auth/facebook/callback', function(req, res, next) {
     	if (!user) { return res.redirect('/'); 
     }
     	utils.createUserSession(req, res, user);
-    	res.render('dashboard.jade', {user:user});
+    	res.redirect('/dashboard');
   })(req, res, next);
 });
 
 router.post('/login', function(req, res) {
-  models.User.findOne({ email: req.body.email }, 'firstName lastName email password data', function(err, user) {
+  models.User.findOne({ email: req.body.email }, 'firstName lastName email password data permissions', function(err, user) {
     if (!user) {
       res.render('auth-login.jade', { error: "Incorrect email / password." });
     } else {

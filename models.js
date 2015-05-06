@@ -17,5 +17,20 @@ module.exports.User = mongoose.model('User', new Schema({
   password:     { type: String, required: '{PATH} is required.' },
   username:			{ type: String, required: '{PATH} is required.', unique: true },
   provider: 		{ type: String},
+  permissions:  { type: [String]},
   data:         Object,
+}));
+
+module.exports.Config = mongoose.model('Config', new Schema({
+  id:           ObjectId,
+  name:         { type: String, required: 'Configs require a Name'},
+  value:        { type: Boolean, required: 'Configs require a Value'}
+}));
+
+module.exports.ConfigCategory = mongoose.model('ConfigCategory', new Schema({
+  id:           ObjectId,
+  name:         { type: String, required: 'ConfigurationsCategorys require a name', unique: true },
+  configs:      { type: Object},
+  permissions:  { type: [String]},
+  tempIndex:    { type: Number}
 }));

@@ -8,20 +8,28 @@ block body
   
   if error
     p ERROR: #{error}
-  form(method="post", action="/users/login/auth/facebook")
-    input(type="hidden", name="_csrf", value=csrfToken)
-    
-    input(type="submit", value="Facebook Login")
-    
-  form(method="post")
-    input(type="hidden", name="_csrf", value=csrfToken)
-    
-    span Email:
-    input(type="email", name="email", required=true)
-    br
-    
-    span Password:
-    input(type="password", name="password", required=true)
-    br
-    
-    input(type="submit")
+  if availableLoginServices
+    p availableLoginServices: #{availableLoginServices}
+    - each config in availableLoginServices.configs
+      if(config.name == "Facebook" && config.value == true)
+        form(method="post", action="/users/login/auth/facebook")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          input(type="submit", value="Facebook Login")
+      if(config.name == "Google" && config.value == true)
+        form(method="post", action="/users/login/auth/google")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          input(type="submit", value="Google Login")
+      if(config.name == "Twitter" && config.value == true)
+        form(method="post", action="/users/login/auth/twitter")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          input(type="submit", value="Twitter Login")
+      if(config.name == "DispatchMyself" && config.value == true)
+        form(method="post")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          span Email:
+          input(type="email", name="email", required=true)
+          br
+          span Password:
+          input(type="password", name="password", required=true)
+          br
+          input(type="submit")

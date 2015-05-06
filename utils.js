@@ -30,12 +30,13 @@ mongoose.connect('mongodb://localhost/DispatchMe');
  *  @param {Object} user - A user object. */
 module.exports.createUserSession = function(req, res, user) {
   var cleanUser = {
-    firstName:  user.firstName,
-    lastName:   user.lastName,
-    email:      user.email,
-    data:       user.data || {},
+    firstName:   user.firstName,
+    lastName:    user.lastName,
+    email:       user.email,
+    permissions: user.permissions,
+    data:        user.data || {},
   };
-  console.log("createUserSession: " + JSON.stringify(cleanUser));
+  //console.log("createUserSession: " + JSON.stringify(cleanUser));
   req.session.user = cleanUser;
   req.user = cleanUser;
   if(!res.locals){
@@ -67,7 +68,7 @@ module.exports.createApp = function() {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(session({ //Session cookie
   	cookieName: 'session',
-  	secret: 'keyboard cat',
+  	secret: 'tyrannosaurusrex1123581321',
   	duration: 30 * 60 * 1000,
   	activeDuration: 5 * 60 * 1000,
   	httpOnly: true, //don't allow js access to cookie

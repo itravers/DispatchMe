@@ -28,8 +28,57 @@ var User = mongoose.model('User');
 /** GET Routes *********************************************************/
 /** Get Dashboard Page */
 router.get('/', utils.requireLogin, function(req, res, next) {
-	res.render('dashboard.jade');
+	/*var AvailableLoginServices = {
+			'Facebook' : true,
+			'DispatchMyself' : true,
+			'Google' : false,
+			'Twitter' : false};
+	var configs = {AvailableLoginServices: AvailableLoginServices};*/
+  getDataThenRender(req, res, next);
+	
+	
 });
+
+function getDataThenRender(req, res, next){
+  getConfigsThenRender(req, res, next);
+}
+
+function getConfigsThenRender(req, res, next){
+  //console.log("getting configs");
+  models.ConfigCategory.find({}, {}, function(err, ConfigCategory) {
+    //console.log(ConfigCategory);
+    
+    if (ConfigCategory.length == 0) { // auto make it if it doesn't exist.
+      console.log("ConfigCategory isn't found");
+      var config = new models.Config({
+        name: "Facebook",
+        value: true
+      });
+      var configArray = [];
+      configArray.push({name: "Facebook", value: true});
+      configArray.push({name: "DispatchMyself", value: true});
+      configArray.push({name: "Google", value: false});
+      configArray.push({name: "Twitter", value: false});
+      ConfigCategory = new models.ConfigCategory({
+          name: "AvailableLoginServices",
+          configs: configArray,
+          permissions: ["GOD"]
+      });
+      //utils.createUserSession(req, user, res);
+      ConfigCategory.save(function(err) {
+        console.log("saving ConfigCategory");
+          if (err){
+            console.log("Error saving ConfigCategory: "+err);
+          }
+          //We just created a configcategory
+      });
+  } else {
+    res.render('dashboard.jade', {
+      configs: ConfigCategory,
+      csrfToken: req.csrfToken()});
+  }
+  });
+}
 
 
 module.exports = router; //Export this router to the main app
