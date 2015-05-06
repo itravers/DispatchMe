@@ -23,7 +23,7 @@ function setConfigs(req, res, next){
     models.ConfigCategory.findOneAndUpdate(
         {name: configCategory.name}, 
         configCategory, 
-        {upsert:true}, 
+        {upsert:false}, 
         function(err, doc){
           if(err){
             res.send({

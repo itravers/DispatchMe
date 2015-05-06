@@ -48,7 +48,7 @@ function getConfigsThenRender(req, res, next){
   models.ConfigCategory.find({}, {}, function(err, ConfigCategory) {
     //console.log(ConfigCategory);
     
-    if (ConfigCategory.length == 0) {
+    if (ConfigCategory.length == 0) { // auto make it if it doesn't exist.
       console.log("ConfigCategory isn't found");
       var config = new models.Config({
         name: "Facebook",
@@ -56,7 +56,7 @@ function getConfigsThenRender(req, res, next){
       });
       var configArray = [];
       configArray.push({name: "Facebook", value: true});
-      configArray.push({name: "DispatchMe", value: true});
+      configArray.push({name: "DispatchMyself", value: true});
       configArray.push({name: "Google", value: false});
       configArray.push({name: "Twitter", value: false});
       ConfigCategory = new models.ConfigCategory({
