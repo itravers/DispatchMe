@@ -4,15 +4,25 @@ block vars
   - var title = 'Dashboard'
 
 block body
+  script(src='/javascripts/angular.js')
   script(src='/javascripts/dashboard.js')
+  
+  
   h1 Dashboard
-  div(class='fb-like', data-href='http://172.242.255.38:3000', data-width='450', data-layout='standard', data-action='like', data-show-faces='true', data-share='true')
   if user
-    a(href='/users/logout') Logout
-    p.
-      Welcome to your dashboard! You are now logged in.
-    h2 User Information
-    p First Name: #{user.firstName}
-    p Last Name:  #{user.lastName}
-    p Email:      #{user.email}
-    p Data:       #{user.data}
+    div(data-ng-app="ConfigurationsApp", data-ng-controller="ConfigurationsCtrl", data-ng-init="configs="+JSON.stringify(configs)+"; permissions="+JSON.stringify(user.permissions)+"; csrfToken="+JSON.stringify(csrfToken)+" ")
+      div(ng-repeat="c in configs")
+        div(data-ng-if="c.name == 'AvailableSocialServices'")
+          div(ng-repeat="service in c.configs")
+            div(data-ng-if="service.name == 'Facebook' && service.value == true")
+              div(class='fb-like', data-href='http://172.242.255.38:3000', data-width='450', data-layout='standard', data-action='like', data-show-faces='true', data-share='true')
+      a(href='/users/logout') Logout
+      p.
+        Welcome to your dashboard! You are now logged in.
+      h2 User Information
+      p First Name: #{user.firstName}
+      p Last Name:  #{user.lastName}
+      p Email:      #{user.email}
+      p Data:       #{user.data}
+      p Permissions: #{user.permissions}
+      include ./Configurations.jade
