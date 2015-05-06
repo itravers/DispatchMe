@@ -20,6 +20,7 @@ function setConfigs(req, res, next){
   for(var i = 0; i < req.body.configSetting.length; i++){
     //var i = 1;
     var configCategory = req.body.configSetting[i];
+    configCategory.tempIndex = i;
     
     models.ConfigCategory.findOneAndUpdate(
         {name: configCategory.name}, 
@@ -33,8 +34,8 @@ function setConfigs(req, res, next){
               statusTextColor : "Red"
             });
           }else{
-            console.log("ready to send data checking loopNum:" + i);
-            if(i == 0){//only send info the last loop
+            console.log("ready to send data checking loopNum:" + doc);
+            if(doc.tempIndex == req.body.configSetting.length-1){//only send info the last loop
               console.log("sending data to dashboard i:"+i);
               res.json({
                 statusText : "Config Saved",
