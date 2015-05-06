@@ -18,6 +18,7 @@ router.post('/set', function(req, res, next) {
 
 function setConfigs(req, res, next){
   for(var i = 0; i < req.body.configSetting.length; i++){
+    //var i = 1;
     var configCategory = req.body.configSetting[i];
     
     models.ConfigCategory.findOneAndUpdate(
@@ -26,20 +27,26 @@ function setConfigs(req, res, next){
         {upsert:false}, 
         function(err, doc){
           if(err){
+            console.log("sending error to dashboard i:"+i);
             res.send({
               statusText : err,
               statusTextColor : "Red"
             });
           }else{
-            res.send({
-              statusText : "Config Saved",
-              statusTextColor : "Green"
-            });
+            console.log("ready to send data checking loopNum:" + i);
+            if(i == 0){//only send info the last loop
+              console.log("sending data to dashboard i:"+i);
+              res.json({
+                statusText : "Config Saved",
+                statusTextColor : "Green"
+              });
+            }
+            
           }
         }
     );
     
-    console.log("user submitted config category: " + configCategory.name);
+    console.log("user submitted config category: " + configCategory.name + " loop#:" + i);
   }
   
 }

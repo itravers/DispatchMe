@@ -12,41 +12,12 @@ var configAppScope;
 
 /** Angular Controller ***********************************************/
 ConfigurationsApp.controller('ConfigurationsCtrl', function($scope, $http, dataService) {
-  $scope.submitAvailableLoginServicesClick = submitAvailableLoginServicesClick;
-  $scope.submitAvailableSocialServicesClick = submitAvailableSocialServicesClick;
+  $scope.submitConfigsClick = submitConfigsClick;
   configAppScope = $scope;
   
   /** Is Triggered for each minute in the timepicker 
    * @param selectedDate The date we are loading deactivated hours for */
-    function submitAvailableSocialServicesClick($event) {
-        var c = {};
-        for(var i = 0; i < $scope.configs.length; i++){
-          if($scope.configs[i].name == "AvailableSocialServices"){
-            c = $scope.configs[i];
-          }
-        }
-        //Our Data Service returns a promise and we then setup our timepicker.
-        dataService.setData("/configuration/set", $scope.configs, $scope.csrfToken)
-            .then(
-              function( data){
-               // alert("submittingAvailableLoginServicesClicked " + JSON.stringify(data));
-                $scope.configs.statusText = data.statusText;
-                if(data.statusTextColor){
-                  $scope.configs.statusTextColor = data.statusTextColor;
-                }else{
-                  $scope.configs.statusTextColor = "Red";
-                }
-                
-                //$scope.deactivatedHours = data.deactivatedHours;
-                //setupTimePicker();
-              }
-        );
-    }
-
-  
-  /** Is Triggered for each minute in the timepicker 
-   * @param selectedDate The date we are loading deactivated hours for */
-    function submitAvailableLoginServicesClick($event) {
+    function submitConfigsClick($event) {
         //Our Data Service returns a promise and we then setup our timepicker.
         dataService.setData("/configuration/set", $scope.configs, $scope.csrfToken)
             .then(

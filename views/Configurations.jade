@@ -5,7 +5,7 @@ block Configuration
     form()
       input(type="hidden", name="_csrf", value=csrfToken)
       br
-      //h3(style="color:{{configs.statusTextColor}};", id="configStatusText") {{configs.statusText}} 
+      h3(style="color:{{configs.statusTextColor}};", id="configStatusText") Status: {{configs.statusText}} 
       label(ng-repeat="confCat in configs")
         div(ng-if="confCat.name == 'AvailableLoginServices'", id="availableLoginServices")
           div(ng-if="permissions.indexOf(confCat.permissions[0]) != -1")
@@ -14,12 +14,11 @@ block Configuration
               input(type="hidden", name="_csrf", value="{{csrfToken}}")
               input(type='checkBox' ng-model="config.value")
               | {{config.name}}
-            input(type="submit", data-ng-click="submitAvailableLoginServicesClick($event)", value="Save")
         div(ng-if="confCat.name == 'AvailableSocialServices'", id="availableSocialServices")
           div(ng-if="permissions.indexOf(confCat.permissions[0]) != -1")
             span Available Social Services:
             label(ng-repeat="config in confCat.configs")
-              input(type="hidden", name="_csrf", value="{{csrfToken}}")
+              //input(type="hidden", name="_csrf", value="{{csrfToken}}")
               input(type='checkBox' ng-model="config.value")
               | {{config.name}}
-            input(type="submit", data-ng-click="submitAvailableSocialServicesClick($event)", value="Save")
+      input(type="submit", data-ng-click="submitConfigsClick($event)", value="Save")
