@@ -20,7 +20,7 @@ function setConfigs(req, res, next){
   for(var i = 0; i < req.body.configSetting.length; i++){
     //var i = 1;
     var configCategory = req.body.configSetting[i];
-    configCategory.tempIndex = i;
+    configCategory.tempIndex = i; //saved to db and used to make sure only the last callback executes
     
     models.ConfigCategory.findOneAndUpdate(
         {name: configCategory.name}, 
@@ -42,15 +42,10 @@ function setConfigs(req, res, next){
                 statusTextColor : "Green"
               });
             }
-            
           }
         }
     );
-    
     console.log("user submitted config category: " + configCategory.name + " loop#:" + i);
   }
-  
 }
-
-
 module.exports = router;
