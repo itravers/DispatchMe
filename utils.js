@@ -33,7 +33,7 @@ require('./config/passport')(passport); // pass passport for configuration
  *  @param {Object} req - The http request object.
  *  @param {Object} res - The http response object.
  *  @param {Object} user - A user object. */
-module.exports.createUserSession = function(req, res, user) {
+/*module.exports.createUserSession = function(req, res, user) {
   var cleanUser = {
     firstName:   user.firstName,
     lastName:    user.lastName,
@@ -48,7 +48,7 @@ module.exports.createUserSession = function(req, res, user) {
   	res.locals = {};
   }
   res.locals.user = cleanUser;
-};
+};*/
 
 /** Create and initialize an Express application that is 'fully loaded' and
  *  ready for usage!
@@ -91,7 +91,7 @@ module.exports.createApp = function() {
   
   //app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
   app.use(csrf()); //cross site request forgery
-  app.use(middleware.simpleAuth);
+  //app.use(middleware.simpleAuth);
   app.use(function(req, res, next){
 	req.mongoose = mongoose; //Let requests and responses have access to the db 
   req.db = db;
@@ -102,10 +102,10 @@ module.exports.createApp = function() {
 
 /** Ensure a user is logged in before allowing them to continue their request.
  *  If a user isn't logged in, they'll be redirected back to the login page. */
-module.exports.requireLogin = function(req, res, next) {
+/* module.exports.requireLogin = function(req, res, next) {
   if (!req.user) {
     res.redirect('/users/login');
   } else {
     next();
   }
-};
+};*/

@@ -6,10 +6,10 @@ var utils = require('./utils');
 var app = utils.createApp();
 
 var routes = require('./routes/index')(app, app.myPassport);
-var users = require('./routes/users');
-var schedules = require('./routes/schedules');
-var dashboard = require('./routes/dashboard');
-var configuration = require('./routes/configuration');
+//var users = require('./routes/users');
+//var schedules = require('./routes/schedules');
+//var dashboard = require('./routes/dashboard');
+//var configuration = require('./routes/configuration');
 
 
 
