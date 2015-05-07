@@ -17,6 +17,7 @@
     "monk": "*",
     "mongoose": "*",
     "client-sessions": "*",
+    "express-session": "*",
     "bcrypt": "*",
     "bcrypt-nodejs": "*",
     "csurf": "*",

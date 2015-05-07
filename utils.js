@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 var csrf = require('csurf');
 var express = require('express');
 var mongoose = require('mongoose');
-var session = require('client-sessions');
+//var session = require('client-sessions');
+var session      = require('express-session');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -72,16 +73,21 @@ module.exports.createApp = function() {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(session({ //Session cookie
+ app.use(session({ //Session cookie
   	cookieName: 'session',
   	secret: 'tyrannosaurusrex1123581321',
   	duration: 30 * 60 * 1000,
   	activeDuration: 5 * 60 * 1000,
   	httpOnly: true, //don't allow js access to cookie
   	secure: false, //if true only allow cookies over https
-  	ephemeral: false //if true delete this cookie when browser is closed.
+  	ephemeral: false, //if true delete this cookie when browser is closed.
+  	saveUninitialized: true,
+  	resave: true
   }));
   
+  //app.use(session({ secret: 'keyboard cat' }));
+  
+  //app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
   app.use(csrf()); //cross site request forgery
   app.use(middleware.simpleAuth);
   app.use(function(req, res, next){

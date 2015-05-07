@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
+        res.render('profile.jade', {
             user : req.user // get the user out of session and pass to template
         });
     });
@@ -75,6 +75,7 @@ module.exports = function(app, passport) {
 function isLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on 
+    //console.log("req.isAuth: " + JSON.parse(req.toString()));
     if (req.isAuthenticated())
         return next();
 
