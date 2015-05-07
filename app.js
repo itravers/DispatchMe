@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var utils = require('./utils');
+var app = utils.createApp();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -10,7 +11,7 @@ var schedules = require('./routes/schedules');
 var dashboard = require('./routes/dashboard');
 var configuration = require('./routes/configuration');
 
-var app = utils.createApp();
+
 
 
 
