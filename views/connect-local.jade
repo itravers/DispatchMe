@@ -22,6 +22,7 @@ html
         // first input here
         // LOGIN FORM
         form(action='/connect/local', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
           .form-group
             label Email
             |             
