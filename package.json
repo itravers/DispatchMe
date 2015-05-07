@@ -18,6 +18,7 @@
     "mongoose": "*",
     "client-sessions": "*",
     "bcrypt": "*",
+    "bcrypt-nodejs": "*",
     "csurf": "*",
     "passport": "*",
     "passport-facebook": "*",

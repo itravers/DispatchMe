@@ -21,6 +21,7 @@ html
           .alert.alert-danger #{message}
         // LOGIN FORM
         form(action='/login', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
           .form-group
             label Email
             |             
