@@ -65,25 +65,27 @@ module.exports.createApp = function() {
   // Middleware
   //uncomment after placing your favicon in /public
   //app.use(favicon(__dirname + '/public/favicon.ico'));
+  app.use(cookieParser());
+  app.use(session({ //Session cookie
+     cookieName: 'session',
+     secret: 'tyrannosaurusrex1123581321',
+     duration: 30 * 60 * 1000,
+     activeDuration: 5 * 60 * 1000,
+     httpOnly: true, //don't allow js access to cookie
+     secure: false, //if true only allow cookies over https
+     ephemeral: false, //if true delete this cookie when browser is closed.
+     saveUninitialized: true,
+     resave: true
+   }));
   app.use(passport.initialize());
   app.use(passport.session()); 
   app.use(flash()); // use connect-flash for flash messages stored in session
   app.use(logger('dev'));
   app.use(bodyParser.json());
-  app.use(cookieParser());
+  
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(bodyParser.urlencoded({ extended: true }));
- app.use(session({ //Session cookie
-  	cookieName: 'session',
-  	secret: 'tyrannosaurusrex1123581321',
-  	duration: 30 * 60 * 1000,
-  	activeDuration: 5 * 60 * 1000,
-  	httpOnly: true, //don't allow js access to cookie
-  	secure: false, //if true only allow cookies over https
-  	ephemeral: false, //if true delete this cookie when browser is closed.
-  	saveUninitialized: true,
-  	resave: true
-  }));
+ 
   
   //app.use(session({ secret: 'keyboard cat' }));
   
