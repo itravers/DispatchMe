@@ -20,6 +20,10 @@
     "bcrypt": "*",
     "csurf": "*",
     "passport": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "passport-local": "*",
+    "passport-twitter": "*",
+    "passport-google-oauth" : "*",
+    "connect-flash" : "*"
   }
 }
