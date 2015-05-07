@@ -18,8 +18,12 @@ var passport = require('passport');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var middleware = require('./middleware');
+var flash = require('connect-flash');
+var configDB = require('./config/database.js');
 
-mongoose.connect('mongodb://localhost/DispatchMe');
+//mongoose.connect('mongodb://localhost/DispatchMe');
+mongoose.connect(configDB.url);
+//require('./config/passport')(passport); // pass passport for configuration
 
 /** Given a user object:
  *  - Store the user object as a req.user
@@ -61,6 +65,7 @@ module.exports.createApp = function() {
   //app.use(favicon(__dirname + '/public/favicon.ico'));
   app.use(passport.initialize());
   app.use(passport.session()); 
+  app.use(flash()); // use connect-flash for flash messages stored in session
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(cookieParser());
