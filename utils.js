@@ -59,6 +59,7 @@ module.exports.createApp = function() {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
   app.locals.pretty = true;
+  app.myPassport = passport;
 
   // Middleware
   //uncomment after placing your favicon in /public

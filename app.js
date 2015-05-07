@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var utils = require('./utils');
 var app = utils.createApp();
 
-var routes = require('./routes/index');
+//var routes = require('./routes/index')(app, app.myPassport);
 var users = require('./routes/users');
 var schedules = require('./routes/schedules');
 var dashboard = require('./routes/dashboard');
@@ -15,11 +15,11 @@ var configuration = require('./routes/configuration');
 
 
 
-app.use('/', routes);
+//app.use('/', routes);
 app.use('/users', users);
-app.use('/schedules', schedules);
-app.use('/dashboard', dashboard);
-app.use('/configuration', configuration);
+//app.use('/schedules', schedules);
+//app.use('/dashboard', dashboard);
+//app.use('/configuration', configuration);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

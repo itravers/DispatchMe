@@ -24,6 +24,8 @@
     "passport-local": "*",
     "passport-twitter": "*",
     "passport-google-oauth" : "*",
+    "method-override": "*",
+     "morgan": "~1.0.0",
     "connect-flash" : "*"
   }
 }
