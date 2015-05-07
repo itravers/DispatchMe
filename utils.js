@@ -23,7 +23,7 @@ var configDB = require('./config/database.js');
 
 //mongoose.connect('mongodb://localhost/DispatchMe');
 mongoose.connect(configDB.url);
-//require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 /** Given a user object:
  *  - Store the user object as a req.user
