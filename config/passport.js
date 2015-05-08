@@ -80,10 +80,14 @@ module.exports = function(passport) {
             //  Whether we're signing up or connecting an account, we'll need
             //  to know if the email address is in use.
             User.findOne({'local.email': email}, function(err, existingUser) {
+              
 
                 // if there are any errors, return the error
-                if (err)
-                    return done(err);
+                if (err){
+                  console.log("error in local signup strategy. " + err)
+                  return done(err);
+                }
+                    
 
                 // check to see if there's already a user with that email
                 if (existingUser) 
@@ -102,6 +106,7 @@ module.exports = function(passport) {
                 } 
                 //  We're not logged in, so we're creating a brand new user.
                 else {
+                  console.log("creating a new user +" + email);
                     // create the user
                     var newUser            = new User();
 
@@ -109,9 +114,11 @@ module.exports = function(passport) {
                     newUser.local.password = newUser.generateHash(password);
 
                     newUser.save(function(err) {
-                        if (err)
-                            throw err;
-
+                        if (err){
+                          console.log("error saving new user - database indexes?" + err);
+                          throw err;
+                        } 
+                        console.log("new user created " + newUser);  
                         return done(null, newUser);
                     });
                 }
