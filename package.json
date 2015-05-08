@@ -1,6 +1,6 @@
 {
   "name": "DispatchMe",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -17,9 +17,17 @@
     "monk": "*",
     "mongoose": "*",
     "client-sessions": "*",
+    "express-session": "*",
     "bcrypt": "*",
+    "bcrypt-nodejs": "*",
     "csurf": "*",
     "passport": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "passport-local": "*",
+    "passport-twitter": "*",
+    "passport-google-oauth" : "*",
+    "method-override": "*",
+     "morgan": "~1.0.0",
+    "connect-flash" : "*"
   }
 }

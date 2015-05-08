@@ -8,7 +8,8 @@ var ObjectId = Schema.ObjectId;
  *
  * This is how we create, edit, delete, and retrieve user accounts via MongoDB.
  */
-module.exports.User = mongoose.model('User', new Schema({
+/*
+module.exports.User = mongoose.model('user', new Schema({
   id:           ObjectId,
   facebook_id:  {type: String},
   firstName:    { type: String, required: '{PATH} is required.' },
@@ -21,6 +22,7 @@ module.exports.User = mongoose.model('User', new Schema({
   data:         Object,
 }));
 
+*/
 module.exports.Config = mongoose.model('Config', new Schema({
   id:           ObjectId,
   name:         { type: String, required: 'Configs require a Name'},

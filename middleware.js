@@ -7,9 +7,9 @@ var utils = require('./utils');
  * This middleware will load users from session data, and handle all user
  * proxying for convenience.
  */
-module.exports.simpleAuth = function(req, res, next) {
+/*module.exports.simpleAuth = function(req, res, next) {
   if (req.session && req.session.user) {
-    models.User.findOne({ email: req.session.user.email }, 'firstName lastName email data permissions', function(err, user) {
+    models.user.findOne({ email: req.session.user.email }, 'firstName lastName email data permissions', function(err, user) {
       if (user) {
         utils.createUserSession(req, res, user);
       }
@@ -18,5 +18,5 @@ module.exports.simpleAuth = function(req, res, next) {
   } else {
     next();
   }
-};
+};*/
 
