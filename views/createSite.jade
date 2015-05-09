@@ -1,0 +1,127 @@
+doctype html
+// views/signup.ejs
+html
+  head
+    title Create New Site
+    |     
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    // load bootstrap css
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
+    // load fontawesome
+    style.
+      body        { padding-top:80px; }
+  body
+    p #{JSON.stringify(sites)}
+    .container
+      .col-sm-6.col-sm-offset-3
+        h1
+          span.fa.fa-sign-in
+            p  Create New Site
+        if(message)
+          if(message.length > 0)
+            .alert.alert-danger #{message}
+        // LOGIN FORM
+        form(action'/site/create', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
+          each site in sites
+            p #{site.label}
+        
+        form.col-lg-12(action='/site/create', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
+          input.templateFileInput(type="hidden", name="templateFile", value=sites[0].templateFile)
+          .form-group.col-lg-6
+            label Site Name
+            |             
+            input.form-control(type='text', name='siteName', placeholder="Your new Sites Name")
+          .form-group.col-lg-6
+            label Main Title
+            |             
+            input.form-control(type='text', name='MainTitle', placeholder="The Main Header/Title")
+          .form-group.col-lg-12
+            label Template - 
+              label.chosenTemplate #{sites[0].templateFile}
+              .templateChooser
+                .mid
+                  img(src=sites[0].thumbnail)
+                ul
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
+          .form-group.col-lg-12
+            label Tag Line
+            |             
+            input.form-control(type='text', name='TagLine', placeholder="The Tag Line under your Main Header")
+          .form-group.col-lg-6
+            label Services Heading
+            |             
+            input.form-control(type='text', name='ServicesHeading', placeholder="The Main Heading of your Service Section")
+          .form-group.col-lg-6
+            label Services Sub-Heading
+            |             
+            input.form-control(type='text', name='ServicesSubheading', placeholder="The Main Sub-Heading of your Service Section")
+          .form-group.col-lg-12
+            label Services Paragraph
+            |             
+            input.form-control(type='textBox', name='ServicesParagraph', placeholder="Write a Paragraph about your services")
+          .form-group.col-lg-6
+            i.fa.fa-facebook.fa-fw
+            label Facebook Link
+            |             
+            input.form-control(type='url', name='FacebookLink', placeholder="Link to a Facebook Account")
+          .form-group.col-lg-6
+            i.fa.fa-twitter.fa-fw
+            label Twitter Link
+              
+            |             
+            input.form-control(type='url', name='TwitterLink', placeholder="Link to a Twitter Account")
+          .form-group.col-lg-6
+            i.fa.fa-google-plus.fa-fw
+            label Google+ Link
+            |             
+            input.form-control(type='url', name='GoogleLink', placeholder="Link to a Google+ Account")
+          .form-group.col-lg-6
+            i.fa.fa-linked-in.fa-fw
+            label Linked-In Link
+            |             
+            input.form-control(type='url', name='LinkedinLink', placeholder="Link to a Linked-In Account")
+          .form-group.col-lg-6
+            i.fa.fa-github.fa-fw
+            label Github Link
+            |             
+            input.form-control.fa-github(type='url', name='GithubLink', placeholder="Link to a Github Account")
+          .form-group.col-lg-6
+            span.glyphicon-envelope
+            label Email to Notify
+            |             
+            input.form-control.fa-github(type='email', name='email', placeholder="Email Contact Page will Notify")
+          | 
+          .form-group.col-lg-12
+            button.btn.btn-warning.btn-lg(type='submit') Signup
+              
+        |     
+        hr
+        |     
+        p
+          | Or go 
+          a(href='/') home
+          | 
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/jcarousellite.min.js')
+    script(type='text/javascript').
+      $(function() {
+        $(".templateChooser").jCarouselLite({
+          btnNext: ".widget .next",
+          btnPrev: ".widget .prev",
+          speed: 800,
+          easing: "backout"
+        });
+
+        $(".templateChooser img").click(function() {
+            $(".templateChooser .mid img").attr("src", $(this).attr("src"));
+            $(".chosenTemplate").html($(this).attr("value"));
+            $(".templateFileInput").attr("value", $(this).attr("value"));
+        });
+      });

@@ -1,0 +1,220 @@
+block site
+  //we are going to put all formElements into their own variables
+  - var MainTitle;// = 'Demo Site';
+  - var TagLine;// = 'This is the TagLine';
+  - var TwitterLink;// = 'http://twitter.com';
+  - var GithubLink;
+  - var FacebookLink;
+  - var ServicesHeading;
+  - var ServicesSubheading;
+  - var ServicesParagraph;
+  - var LinkedinLink;
+  - var GoogleLink;
+  each element in site.formElements
+    if(element.name == 'MainTitle') 
+      - MainTitle = element.value;
+    if(element.name == 'TagLine') 
+      - TagLine = element.value;
+    if(element.name == 'TwitterLink') 
+      - TwitterLink = element.value;
+    if(element.name == 'GithubLink') 
+      - GithubLink = element.value;
+    if(element.name == 'FacebookLink') 
+      - FacebookLink = element.value;
+    if(element.name == 'ServicesHeading') 
+      - ServicesHeading = element.value;
+    if(element.name == 'ServicesSubheading') 
+      - ServicesSubheading = element.value;
+    if(element.name == 'ServicesParagraph') 
+      - ServicesParagraph = element.value;
+    if(element.name == 'LinkedinLink') 
+      - LinkedinLink = element.value;
+    if(element.name == 'GoogleLink') 
+      - GoogleLink = element.value;
+  head
+    meta(charset='utf-8')
+    |     
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    |     
+    meta(name='description', content='')
+    |     
+    meta(name='author', content='')
+    |  
+    if(MainTitle)   
+      title #{MainTitle}
+    // Bootstrap Core CSS
+    link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='/stylesheets/landing-page.css', rel='stylesheet')
+    // Custom Fonts
+    link(href='/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    |     
+    link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic', rel='stylesheet', type='text/css')
+  body
+    // Navigation
+    nav.navbar.navbar-default.navbar-fixed-top.topnav(role='navigation')
+      .container.topnav
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            |                     
+            span.icon-bar
+            |                     
+            span.icon-bar
+            |                     
+            span.icon-bar
+          |   
+          if(site)              
+            a.navbar-brand.topnav(href='#') #{MainTitle}
+          else
+            a.navbar-brand.topnav(href='#') Site Name
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#about') About
+            |  
+            if(ServicesHeading)                   
+              li
+                a(href='#services') Services
+              |                     
+            li
+              a(href='#contact') Contact
+        // /.navbar-collapse
+      // /.container
+    // Header
+    a(name='about')
+    |     
+    .intro-header
+      .container
+        .row
+          .col-lg-12
+            .intro-message
+              if(site)
+                if(MainTitle)
+                  h1 #{MainTitle}
+                if(TagLine)                         
+                  h3 #{TagLine}
+              else
+                h1 Your Site Name
+                |                         
+                h3 Your Site Tagline                
+              hr.intro-divider
+              |                         
+              ul.list-inline.intro-social-buttons
+                if(TwitterLink)
+                  li
+                    a.btn.btn-default.btn-lg(href=TwitterLink)
+                      i.fa.fa-twitter.fa-fw
+                      |  
+                      span.network-name Twitter
+                  |  
+                if(GithubLink)                           
+                  li
+                    a.btn.btn-default.btn-lg(href=GithubLink)
+                      i.fa.fa-github.fa-fw
+                      |  
+                      span.network-name Github
+                  |  
+                if(FacebookLink)                           
+                  li
+                    a.btn.btn-default.btn-lg(href=FacebookLink)
+                      i.fa.fa-facebook.fa-fw
+                      |  
+                      span.network-name Facebook
+                if(GoogleLink)                    
+                  li
+                    a.btn.btn-default.btn-lg(href=GoogleLink)
+                      i.fa.fa-google-plus.fa-fw
+                      |  
+                      span.network-name Google+
+                if(LinkedinLink)                    
+                  li
+                    a.btn.btn-default.btn-lg(href=LinkedinLink)
+                      i.fa.fa-linked-in.fa-fw
+                      |  
+                      span.network-name Linked-In
+      // /.container
+    // /.intro-header
+    // Page Content
+    a(name='services')
+    |    
+    .content-section-a
+      if(ServicesHeading)
+        .container
+          .row
+            .col-lg-5.col-sm-6
+              hr.section-heading-spacer
+              |                     
+              .clearfix
+              |                     
+              h2.section-heading
+                | #{ServicesHeading}
+                br
+                | #{ServicesSubheading}
+              |                     
+              p.lead
+                | #{ServicesParagraph}
+            |                 
+            .col-lg-5.col-lg-offset-2.col-sm-6
+              img.img-responsive(src='/img/ipad.png', alt='')
+    a(name='contact')
+    |     
+    .banner
+      .container
+        .row
+          .col-lg-16
+            h2 Contact Us
+          |                 
+          .col-lg-16
+            form(action='/site/contactus', method='post')
+              input(type="hidden", name="_csrf", value=csrfToken)
+              .form-group.col-lg-6
+                label Name
+                |             
+                input.form-control(type='text', name='name', placeholder="Your name")
+              .form-group.col-lg-6
+                label E-Mail
+                |             
+                input.form-control(type='email', name='email', placeholder="Your Email")
+              .form-group.col-lg-12
+                label Message
+                |             
+                textArea.form-control(type='textBox', name='message', placeholder="Type Your Message Here")
+              .form-group.col-lg-2
+                button.btn.btn-default.btn-sm(type='submit') Submit
+      // /.container
+    // /.banner
+    // Footer
+    footer
+      .container
+        .row
+          .col-lg-12
+            ul.list-inline
+              li
+                a(href='#') Home
+              |                         
+              li.footer-menu-divider &sdot;
+              |                         
+              li
+                a(href='#about') About
+              |                         
+              li.footer-menu-divider &sdot;
+              | 
+              if(ServicesHeading)                        
+                li
+                  a(href='#services') Services
+                |                         
+                li.footer-menu-divider &sdot;
+                |                         
+              li
+                a(href='#contact') Contact
+            |                     
+            p.copyright.text-muted.small Copyright &copy; #{MainTitle} 2015. All Rights Reserved
+    // jQuery
+    script(src='/javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='/javascripts/bootstrap.min.js')

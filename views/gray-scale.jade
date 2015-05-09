@@ -1,0 +1,195 @@
+block site
+  //we are going to put all formElements into their own variables
+  - var MainTitle;// = 'Demo Site';
+  - var TagLine;// = 'This is the TagLine';
+  - var TwitterLink;// = 'http://twitter.com';
+  - var GithubLink;
+  - var FacebookLink;
+  - var ServicesHeading;
+  - var ServicesSubheading;
+  - var ServicesParagraph;
+  - var LinkedinLink;
+  - var GoogleLink;
+  each element in site.formElements
+    if(element.name == 'MainTitle') 
+      - MainTitle = element.value;
+    if(element.name == 'TagLine') 
+      - TagLine = element.value;
+    if(element.name == 'TwitterLink') 
+      - TwitterLink = element.value;
+    if(element.name == 'GithubLink') 
+      - GithubLink = element.value;
+    if(element.name == 'FacebookLink') 
+      - FacebookLink = element.value;
+    if(element.name == 'ServicesHeading') 
+      - ServicesHeading = element.value;
+    if(element.name == 'ServicesSubheading') 
+      - ServicesSubheading = element.value;
+    if(element.name == 'ServicesParagraph') 
+      - ServicesParagraph = element.value;
+    if(element.name == 'LinkedinLink') 
+      - LinkedinLink = element.value;
+    if(element.name == 'GoogleLink') 
+      - GoogleLink = element.value;
+head
+    meta(charset='utf-8')
+    |     
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    |     
+    meta(name='description', content='')
+    |     
+    meta(name='author', content='')
+    |     
+    title #{MainTitle} | Contact Us
+    // Bootstrap Core CSS
+    link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='/stylesheets/grayscale.css', rel='stylesheet')
+    // Custom Fonts
+    link(href='/font-awesome/css/grayscalefont-awesome.min.css', rel='stylesheet', type='text/css')
+    |     
+    link(href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic', rel='stylesheet', type='text/css')
+    |     
+    link(href='http://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
+  body#page-top(data-spy='scroll', data-target='.navbar-fixed-top')
+    // Navigation
+    nav.navbar.navbar-custom.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-main-collapse')
+            i.fa.fa-bars
+          |                 
+          a.navbar-brand.page-scroll(href='#page-top')
+            i.fa.fa-play-circle
+            |   
+            span.light #{MainTitle}
+            |  
+        // Collect the nav links, forms, and other content for toggling
+        .collapse.navbar-collapse.navbar-right.navbar-main-collapse
+          ul.nav.navbar-nav
+            // Hidden li included to remove active class from about link when scrolled up past about section
+            li.hidden
+              a(href='#page-top')
+            |                     
+            li
+              a.page-scroll(href='#about') About
+            |                     
+            li
+              a.page-scroll(href='#contact') Contact
+            |                     
+            li
+              a.page-scroll(href='#links') Links
+        // /.navbar-collapse
+      // /.container
+    // Intro Header
+    header.intro
+      div.intro-body
+        .container
+          .row
+            .col-md-8.col-md-offset-2
+              h1.brand-heading #{MainTitle}
+              |                         
+              p.intro-text #{TagLine}
+              |                         
+              a.btn.btn-circle.page-scroll(href='#about')
+                i.fa.fa-angle-double-down.animated
+    // About Section
+    section#about.container.content-section.text-center
+      .row
+        .col-lg-8.col-lg-offset-2
+          h2 #{ServicesHeading}
+            br
+            | #{ServicesSubheading}
+          |                 
+          p
+            | #{ServicesParagraph}
+    // Download Section
+    section#contact.content-section
+      .download-section
+        .container
+          .col-lg-8.col-lg-offset-2
+            h2 Contact Us
+            |                     
+            p You can contact us directly through this form
+            |                     
+            .row              
+          .col-lg-16
+            form(action='/site/contactus', method='post')
+              input(type="hidden", name="_csrf", value=csrfToken)
+              .form-group.col-lg-6
+                label Name
+                |             
+                input.form-control(type='text', name='name', placeholder="Your name")
+              .form-group.col-lg-6
+                label E-Mail
+                |             
+                input.form-control(type='email', name='email', placeholder="Your Email")
+              .form-group.col-lg-12
+                label Message
+                |             
+                textArea.form-control(type='textBox', name='message', placeholder="Type Your Message Here")
+              .form-group.col-lg-2
+                button.btn.btn-default.btn-sm(type='submit') Submit
+    // Contact Section
+    section#links.container.content-section.text-center
+      .row
+        .col-lg-8.col-lg-offset-2
+          h2 Contact #{MainTitle}
+          |                 
+          p
+            | Please E-mail us or Contact Us through one of the following social network sites to talk to us.
+          |                 
+          p
+            a(href='mailto:#{site.email}') #{site.email}
+          |                 
+          ul.list-inline.banner-social-buttons
+            if(TwitterLink)
+              li
+                a.btn.btn-default.btn-lg(href=TwitterLink)
+                  i.fa.fa-twitter.fa-fw
+                  |  
+                  span.network-name Twitter
+              |    
+            if(GithubLink)                 
+              li
+                a.btn.btn-default.btn-lg(href=GithubLink)
+                  i.fa.fa-github.fa-fw
+                  |  
+                  span.network-name Github
+              | 
+            if(GoogleLink)                    
+              li
+                a.btn.btn-default.btn-lg(href=GoogleLink)
+                  i.fa.fa-google-plus.fa-fw
+                  |  
+                  span.network-name Google+
+            if(FacebookLink)                    
+              li
+                a.btn.btn-default.btn-lg(href=FacebookLink)
+                  i.fa.fa-facebook.fa-fw
+                  |  
+                  span.network-name Facebook
+            if(LinkedinLink)                    
+              li
+                a.btn.btn-default.btn-lg(href=LinkedinLink)
+                  i.fa.fa-linked-in.fa-fw
+                  |  
+                  span.network-name Linked-In
+    // Map Section
+    //#map
+    // Footer
+    footer
+      .container.text-center
+        p Copyright &copy; #{MainTitle} 2015
+    // jQuery
+    script(src='/javascripts/jquery.js')
+    // Bootstrap Core JavaScript
+    script(src='/javascripts/bootstrap.min.js')
+    // Plugin JavaScript
+    script(src='/javascripts/jquery.easing.min.js')
+    // Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/
+    script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false')
+    // Custom Theme JavaScript
+    script(src='/javascripts/grayscale.js')

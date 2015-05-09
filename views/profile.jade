@@ -18,6 +18,7 @@ html
           |  Profile Page
         |         
         a.btn.btn-default.btn-sm(href='/logout') Logout
+        a.btn.btn-default.btn-sm(href='/site') Site
       |     
       .row
         // LOCAL INFORMATION
@@ -122,3 +123,12 @@ html
               a.btn.btn-danger(href='/connect/google') Connect Google
               |  Google+
             // check if the user has this token (is the user authenticated with this social account)
+      if(user.permissions.sitewide == "GOD")
+        .row
+        // TWITTER INFORMATION
+        .col-sm-12
+          .well
+            h3.text-info
+              span.glyphicon.glyphicon-cog
+            if(user.twitter.token)
+              p

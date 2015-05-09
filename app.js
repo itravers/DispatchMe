@@ -6,6 +6,7 @@ var utils = require('./utils');
 var app = utils.createApp();
 
 var routes = require('./routes/index')(app, app.myPassport);
+var sites = require('./routes/sites')(app, app.myPassport);
 //var users = require('./routes/users');
 //var schedules = require('./routes/schedules');
 //var dashboard = require('./routes/dashboard');
@@ -14,7 +15,7 @@ var routes = require('./routes/index')(app, app.myPassport);
 
 
 
-
+//app.use('/site', sites);
 //app.use('/', routes);
 //app.use('/users', users);
 //app.use('/schedules', schedules);
