@@ -12,9 +12,32 @@ module.exports = function(app, passport) {
   
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('profile.jade', {
-      user : req.user
+    
+    Site.find({ 'owner' :  req.user._id }, {}, function(err, sites) {
+      var errors = [];
+      if (err){ // if there are any errors, return the error to createSite.jade to be displayed to user
+        errors.push(err);
+        res.render('profile.jade',
+                   {message: errors,
+                    csrfToken: req.csrfToken(),
+                    user: req.user}
+        );
+      }
+      if (!sites){ 
+       //This user has made no sites
+      }else{
+        console.log("Rendering Site: " + sites);
+        res.render('profile.jade',
+            {csrfToken: req.csrfToken(),
+             sites: sites,
+             user: req.user}
+         );
+      } 
     });
+    
+    //res.render('profile.jade', {
+    //  user : req.user
+    //});
   });
 
   // LOGOUT ==============================
