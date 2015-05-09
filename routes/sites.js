@@ -130,7 +130,7 @@ module.exports = function(app, passport) {
         newSite.name = req.body.siteName;
         newSite.email = req.body.email;
         newSite.templateFile = req.body.templateFile;
-        newSite.owners = [owner._id];
+        newSite.owner = owner._id;
         newSite.formElements = [MainTitle, TagLine, TwitterLink, GithubLink, FacebookLink, ServicesHeading, ServicesSubheading, ServicesParagraph, GoogleLink, LinkedinLink];
         newSite.save(function(err) {// save the new site to the database.
             if (err){//error adding new site
