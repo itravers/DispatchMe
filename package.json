@@ -28,6 +28,8 @@
     "passport-google-oauth" : "*",
     "method-override": "*",
      "morgan": "~1.0.0",
-    "connect-flash" : "*"
+    "connect-flash" : "*",
+    "gridfs-stream" : "*",
+    "stream-to-buffer" : "*"
   }
 }
