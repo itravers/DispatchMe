@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
-    Site.findOne({ 'name' :  regexSiteName }, function(err, site) {
+    Site.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
       var errors = [];
       // if there are any errors, return the error
       if (err){
@@ -28,8 +28,13 @@ module.exports = function(app, passport) {
         
         errors.push("No Site Found: " + siteName);
         console.log("No Site Found: " + errors);
+        //later this code will be used to sign up a new site
         var newSite            = new Site();
-        newSite.name = siteName ;
+        newSite.name = siteName;
+        newSite.configCategories = {name: "AvailableLoginServices",
+                                     configs: [{name: "Facebook", value: true},
+                                               {name: "DispatchMyself", value: true}]
+                                    };
         newSite.save(function(err) {
             if (err){
               console.log("error saving new user - database indexes?" + err);
@@ -42,8 +47,9 @@ module.exports = function(app, passport) {
       }else{
         console.log("Rendering Site: " + site);
         res.render('dataDisplay.jade',
-            {siteName: site.name});
+            {site: site});
       }
+      
         
   });
     
