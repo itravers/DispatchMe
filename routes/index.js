@@ -1,4 +1,7 @@
 module.exports = function(app, passport) {
+  
+//load up the Site model
+  var Site       = require('../models/site');
 
 // normal routes ===============================================================
 
@@ -10,8 +13,39 @@ module.exports = function(app, passport) {
   // INDIVIDUAL SITES =========================
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
-    res.render('dataDisplay.jade',
-        {siteName: siteName});
+    Site.findOne({ 'name' :  siteName }, function(err, site) {
+      var errors = [];
+      // if there are any errors, return the error
+      if (err){
+        console.log("error getting site " + err);
+        errors.push(err);
+        res.render('dataDisplay.jade',
+            {error: errors});
+      }
+      // if no user is found, return the message
+      if (!site){
+        
+        errors.push("No Site Found: " + siteName);
+        console.log("No Site Found: " + errors);
+        var newSite            = new Site();
+        newSite.name = siteName ;
+        newSite.save(function(err) {
+            if (err){
+              console.log("error saving new user - database indexes?" + err);
+              throw err;
+            } 
+            console.log("new site created " + newSite);
+        });
+        res.render('dataDisplay.jade',
+            {error: errors});
+      }else{
+        console.log("Rendering Site: " + site);
+        res.render('dataDisplay.jade',
+            {siteName: site.name});
+      }
+        
+  });
+    
   });
 
   // PROFILE SECTION =========================

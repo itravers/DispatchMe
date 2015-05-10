@@ -112,3 +112,5 @@ site1 = {
 			    }
 			   ]
 }
+
+db.sites.insert(site1)
