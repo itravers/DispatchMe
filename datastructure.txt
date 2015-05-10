@@ -98,4 +98,17 @@ socialConfig = {
 
 db.configcategories.insert(socialConfig) 
 
-https://graph.facebook.com/oauth/access_token?client_id=1576833329233718&redirect_uri=http://172.242.255.38:3000/users/login/auth/facebook/callback&client_secret=1ec1e145c288039ffcaf0087628332c0&code=AQCtTeGKbHWXyDjDF-Or97pF5JApSLXTm5BUiblOEaQiWvHgSSN8HOY2iGU0FvzMDzpltV38pKklRiZoqTQLxwbsZwHpmEkkEMwZKvgW4H2PPMiCnzo2wreACdDyuLqKbsrEELt5MPuO7QOBobhlNOYcYH2fOZNwgM3DGd6lhlP8GSjQVkjlBp9IRCF3va5E5d4oEgT0_RErOr9lnwH5BRoZyFW2cWse_cYBcn58n7xT0gyCgXi7qfNm0Al_l6YEXk5kvcRwzDK0LxvAohIiBFwcaMENEHZnI5kmRTTLpAAR0smRJrw93aH9mBWSS8HhpDk
+
+site1 = {
+	name: "ChicoSystems",
+	configsCategories: [{name: "AvailableLoginServices",
+			     configs: [{name : "Facebook", value: true},
+				       {name : "Twitter",  value: true},
+				       {name : "Google", value: true},
+                                       {name : "DispatchMyself", value true}]
+			    },
+			    {name: "AvailableSocialServices",
+			     configs: [{name : "Facebook", value: true}]
+			    }
+			   ]
+}
