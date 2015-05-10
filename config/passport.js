@@ -109,7 +109,7 @@ module.exports = function(passport) {
                   console.log("creating a new user +" + email);
                     // create the user
                     var newUser            = new User();
-
+                    newUser.permissions.sitewide = "user";   
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
 
@@ -170,7 +170,7 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         var newUser            = new User();
-
+                        newUser.permissions.sitewide = "user";   
                         newUser.facebook.id    = profile.id;
                         newUser.facebook.token = token;
                         newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
@@ -245,7 +245,7 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         var newUser                 = new User();
-
+                        newUser.permissions.sitewide = "user";   
                         newUser.twitter.id          = profile.id;
                         newUser.twitter.token       = token;
                         newUser.twitter.username    = profile.username;
@@ -320,7 +320,7 @@ module.exports = function(passport) {
                         return done(null, user);
                     } else {
                         var newUser          = new User();
-
+                        newUser.permissions.sitewide = "user"; 
                         newUser.google.id    = profile.id;
                         newUser.google.token = token;
                         newUser.google.name  = profile.displayName;
