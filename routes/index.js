@@ -31,10 +31,15 @@ module.exports = function(app, passport) {
         //later this code will be used to sign up a new site
         var newSite            = new Site();
         newSite.name = siteName;
-        newSite.configCategories = {name: "AvailableLoginServices",
+        newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: true},
-                                               {name: "DispatchMyself", value: true}]
-                                    };
+                                               {name: "DispatchMyself", value: true},
+                                               {name: "Twitter", value: true},
+                                               {name: "Google", value: true}]
+                                    },
+                                    {name: "AvailableSocialServices",
+                                      configs: [{name: "Facebook", value: true}]
+                                     }];
         newSite.save(function(err) {
             if (err){
               console.log("error saving new user - database indexes?" + err);
@@ -42,11 +47,11 @@ module.exports = function(app, passport) {
             } 
             console.log("new site created " + newSite);
         });
-        res.render('dataDisplay.jade',
+        res.render('site.jade',
             {error: errors});
       }else{
         console.log("Rendering Site: " + site);
-        res.render('dataDisplay.jade',
+        res.render('site.jade',
             {site: site});
       }
       
