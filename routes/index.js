@@ -13,7 +13,8 @@ module.exports = function(app, passport) {
   // INDIVIDUAL SITES =========================
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
-    Site.findOne({ 'name' :  siteName }, function(err, site) {
+    var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
+    Site.findOne({ 'name' :  regexSiteName }, function(err, site) {
       var errors = [];
       // if there are any errors, return the error
       if (err){
