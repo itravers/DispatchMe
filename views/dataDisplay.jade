@@ -16,7 +16,9 @@ html
         h1
           span.fa.fa-lock
           |  Display Data
-        |         
+        |      
+        if(error)
+          p #{error}   
         p #{siteName}       
         
         
