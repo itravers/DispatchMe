@@ -18,7 +18,10 @@ html
           |  Display Data
         |      
         if(error)
-          p #{error}   
-        p #{siteName}       
+          p #{error}
+        if(site)   
+          p #{site}
+          if(configCategories)
+            p #{configCategories}       
         
         
