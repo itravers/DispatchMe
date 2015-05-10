@@ -6,6 +6,13 @@ module.exports = function(app, passport) {
   app.get('/', function(req, res) {
     res.render('index.jade');
   });
+  
+  // INDIVIDUAL SITES =========================
+  app.get('/site/:siteName', function(req, res){
+    var siteName = req.params.siteName;
+    res.render('dataDisplay.jade',
+        {siteName: siteName});
+  });
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function(req, res) {
