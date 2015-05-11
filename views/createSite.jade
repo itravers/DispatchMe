@@ -1,0 +1,37 @@
+doctype html
+// views/signup.ejs
+html
+  head
+    title Create New Site
+    |     
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+    // load bootstrap css
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+    // load fontawesome
+    style.
+      body        { padding-top:80px; }
+  body
+    .container
+      .col-sm-6.col-sm-offset-3
+        h1
+          span.fa.fa-sign-in
+            p  Create New Site
+        if(message)
+          if(message.length > 0)
+            .alert.alert-danger #{message}
+        // LOGIN FORM
+        form(action='/site/create', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
+          .form-group
+            label Site Name
+            |             
+            input.form-control(type='text', name='email')
+          | 
+          button.btn.btn-warning.btn-lg(type='submit') Signup
+        |     
+        hr
+        |     
+        p
+          | Or go 
+          a(href='/') home
+          | .
