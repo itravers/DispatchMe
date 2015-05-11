@@ -11,6 +11,7 @@ module.exports = function(app, passport) {
   });
   
   // INDIVIDUAL SITES =========================
+  /*
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
@@ -59,7 +60,7 @@ module.exports = function(app, passport) {
   });
     
   });
-
+*/
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function(req, res) {
     res.render('profile.jade', {
