@@ -1,4 +1,5 @@
 module.exports = function(app, passport) {
+  var mongoose = require('mongoose');
   
 //load up the Site model
   var Site       = require('../models/site');
@@ -91,6 +92,49 @@ module.exports = function(app, passport) {
     //res.render("createSite.jade", {message: "this is the message", csrfToken: req.csrfToken()});
   });
   
+  app.get('/site/dbTest', function(req, res){
+    console.log("/site/dbTest");
+    var fs = require('fs');
+    
+    var Grid = require('gridfs-stream');
+    Grid.mongo = mongoose.mongo;
+   // mongoose.connect('mongodb://127.0.0.1/DispatchMe');
+    var conn = mongoose.connection;
+        console.log('open');
+        var gfs = Grid(conn.db);
+     
+      //write content to file system
+       // var fs_write_stream = fs.createWriteStream('write.txt');
+         
+        //read from mongodb
+        var readstream = gfs.createReadStream({
+             filename: 'views/site.jade'
+        });
+        
+        var buffers = [];
+        readstream.on('data', function(buffer) {
+          buffers.push(buffer);
+        });
+        readstream.on('end', function() {
+          var buffer = Buffer.concat(buffers);
+          //...do your stuff...
+          console.log("here is the buffer " + buffer);
+          var jade = require('jade');
+          var fn = jade.compile(buffers);
+          var html = fn({name:'Slack'});
+          res.render('blank.jade', {html:html});
+        });
+          
+        
+        
+       // readstream.pipe(fs_write_stream);
+       // fs_write_stream.on('close', function () {
+        //     console.log('file has been written fully!');
+       // });
+      //});
+ 
+  });
+  
   // INDIVIDUAL SITES =========================
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
@@ -114,11 +158,10 @@ module.exports = function(app, passport) {
       }
       
         
-  });
     
-  });
+    });
 
-  
+  });
 };
 
 // route middleware to ensure user is logged in
