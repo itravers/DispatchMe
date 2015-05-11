@@ -123,7 +123,6 @@ module.exports = function(app, passport) {
           var fn = jade.compile(buffer);
           var html = fn();
           console.log("here is the html " + html);
-          html[0] = '';
           res.status('200').send(html);
         });
           
@@ -155,7 +154,7 @@ module.exports = function(app, passport) {
         res.send({message: "That site was not found"});
       }else{
         console.log("Rendering Site: " + site);
-        res.render('site.jade',
+        res.render('site2.jade',
             {site: site});
       }
       
