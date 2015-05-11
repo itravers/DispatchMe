@@ -15,7 +15,7 @@ conn.once('open', function () {
     // streaming to gridfs
     //filename to store in mongodb
     var writestream = gfs.createWriteStream({
-        filename: 'views/site.jade'
+        filename: 'views/landingPage.jade'
     });
     fs.createReadStream('./views/site.jade').pipe(writestream);
  
