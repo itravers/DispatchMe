@@ -14,6 +14,21 @@ module.exports = function(app, passport) {
   // a User is trying to make a new site
   app.post('/site/create', function(req, res){
     var siteName = req.body.siteName;
+    if(req.body.Facebook == 'on'){
+      facebookLogin = true;
+    }else{
+      facebookLogin = false;
+    }
+    if(req.body.Twitter == 'on'){
+      twitterLogin = true;
+    }else{
+      twitterLogin = false;
+    }
+    if(req.body.Google == 'on'){
+      googleLogin = true;
+    }else{
+      googleLogin = false;
+    }
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
     var owner = req.user;
     Site.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
@@ -27,15 +42,14 @@ module.exports = function(app, passport) {
       }
       if (!site){ //No site was found by this name, lets create one.
         console.log("User " + owner + " is creating new site " + siteName);
-        //later this code will be used to sign up a new site
         var newSite            = new Site();
         newSite.name = siteName;
         newSite.owners = [owner._id];
         newSite.configCategories = [{name: "AvailableLoginServices",
-                                     configs: [{name: "Facebook", value: true},
+                                     configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},
-                                               {name: "Twitter", value: true},
-                                               {name: "Google", value: true}]
+                                               {name: "Twitter", value: twitterLogin},
+                                               {name: "Google", value: googleLogin}]
                                     },
                                     {name: "AvailableSocialServices",
                                       configs: [{name: "Facebook", value: true}]
