@@ -92,8 +92,8 @@ module.exports = function(app, passport) {
     //res.render("createSite.jade", {message: "this is the message", csrfToken: req.csrfToken()});
   });
   
-  app.get('/site/dbTest', function(req, res){
-    console.log("/site/dbTest");
+  app.get('/site/demo/:siteName', function(req, res){
+    var siteName = req.params.siteName;
     var fs = require('fs');
     
     var Grid = require('gridfs-stream');
@@ -108,7 +108,7 @@ module.exports = function(app, passport) {
          
         //read from mongodb
         var readstream = gfs.createReadStream({
-             filename: 'views/site.jade'
+             filename: 'views/'+siteName+'.jade'
         });
         
         var buffers = [];
@@ -118,11 +118,13 @@ module.exports = function(app, passport) {
         readstream.on('end', function() {
           var buffer = Buffer.concat(buffers);
           //...do your stuff...
-          console.log("here is the buffer " + buffer);
+         // console.log("here is the buffer " + buffer);
           var jade = require('jade');
-          var fn = jade.compile(buffers);
-          var html = fn({name:'Slack'});
-          res.render('blank.jade', {html:html});
+          var fn = jade.compile(buffer);
+          var html = fn();
+          console.log("here is the html " + html);
+          html[0] = '';
+          res.status('200').send(html);
         });
           
         
