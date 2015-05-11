@@ -6,9 +6,68 @@ module.exports = function(app, passport) {
 // normal routes ===============================================================
 
   // show the home page (will also have our login links)
-  app.get('/site', function(req, res) {
+  app.get('/site', isLoggedIn, function(req, res) {
     //possibly create a new site here?
-    res.render('createSite.jade');
+    res.render('createSite.jade', {csrfToken: req.csrfToken()});
+  });
+  
+  // a User is trying to make a new site
+  app.post('/site/create', function(req, res){
+    var siteName = req.body.siteName;
+    var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
+    var owner = req.user;
+    Site.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
+      var errors = [];
+      if (err){ // if there are any errors, return the error to createSite.jade to be displayed to user
+        errors.push(err);
+        res.render('createSite.jade',
+                   {message: errors,
+                    csrfToken: req.csrfToken()}
+        );
+      }
+      if (!site){ //No site was found by this name, lets create one.
+        console.log("User " + owner + " is creating new site " + siteName);
+        //later this code will be used to sign up a new site
+        var newSite            = new Site();
+        newSite.name = siteName;
+        newSite.owners = [owner._id];
+        newSite.configCategories = [{name: "AvailableLoginServices",
+                                     configs: [{name: "Facebook", value: true},
+                                               {name: "DispatchMyself", value: true},
+                                               {name: "Twitter", value: true},
+                                               {name: "Google", value: true}]
+                                    },
+                                    {name: "AvailableSocialServices",
+                                      configs: [{name: "Facebook", value: true}]
+                                     }];
+        newSite.save(function(err) {// save the new site to the database.
+            if (err){//error adding new site
+              console.log("error saving new user - database indexes?" + err);
+               res.render('createSite.jade',
+                  {message: err,
+                   csrfToken: req.csrfToken()}
+               );
+            } 
+            console.log("new site created " + newSite);
+            res.redirect('/site/'+newSite.name+'/');
+        });
+        
+      }else{
+        console.log("Rendering Site: " + site);
+        res.render('createSite.jade',
+            {message: "A site by that name already exists.",
+             csrfToken: req.csrfToken()}
+         );
+      }
+      
+        
+  });
+    
+    
+    
+    
+    
+    //res.render("createSite.jade", {message: "this is the message", csrfToken: req.csrfToken()});
   });
   
   // INDIVIDUAL SITES =========================
@@ -26,30 +85,7 @@ module.exports = function(app, passport) {
       }
       // if no user is found, return the message
       if (!site){
-        
-        errors.push("No Site Found: " + siteName);
-        console.log("No Site Found: " + errors);
-        //later this code will be used to sign up a new site
-        var newSite            = new Site();
-        newSite.name = siteName;
-        newSite.configCategories = [{name: "AvailableLoginServices",
-                                     configs: [{name: "Facebook", value: true},
-                                               {name: "DispatchMyself", value: true},
-                                               {name: "Twitter", value: true},
-                                               {name: "Google", value: true}]
-                                    },
-                                    {name: "AvailableSocialServices",
-                                      configs: [{name: "Facebook", value: true}]
-                                     }];
-        newSite.save(function(err) {
-            if (err){
-              console.log("error saving new user - database indexes?" + err);
-              throw err;
-            } 
-            console.log("new site created " + newSite);
-        });
-        res.render('site.jade',
-            {error: errors});
+        res.send({message: "That site was not found"});
       }else{
         console.log("Rendering Site: " + site);
         res.render('site.jade',
@@ -66,8 +102,11 @@ module.exports = function(app, passport) {
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
+  if (req.isAuthenticated()){
+    console.log("isLoggedIn: yes");
     return next();
-
-  res.redirect('/');
+  }else{
+    console.log("isLoggedIn: no");
+    res.redirect('/');
+  }
 }

@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 // define the schema for our user model
 var siteSchema = mongoose.Schema({
   name              : String,
-  configCategories  : { type : Array , "default" : [] }
+  configCategories  : { type : Array , "default" : [] },
+  owners            : { type : Array , "default" : [] }
 });
 
 // methods ======================
