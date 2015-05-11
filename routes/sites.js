@@ -14,6 +14,7 @@ module.exports = function(app, passport) {
   // a User is trying to make a new site
   app.post('/site/create', function(req, res){
     var siteName = req.body.siteName;
+    var tagLine = req.body.tagLine;
     if(req.body.facebookShare == 'on'){
       facebookShare = true;
     }else{
@@ -49,6 +50,7 @@ module.exports = function(app, passport) {
         console.log("User " + owner + " is creating new site " + siteName);
         var newSite            = new Site();
         newSite.name = siteName;
+        newSite.tagLine = tagLine;
         newSite.owners = [owner._id];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
@@ -93,7 +95,7 @@ module.exports = function(app, passport) {
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
-    Site.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
+    Site.findOne({ 'name' :  regexSiteName }, "name tagLine configCategories", function(err, site) {
       var errors = [];
       // if there are any errors, return the error
       if (err){
