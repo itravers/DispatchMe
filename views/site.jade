@@ -33,8 +33,11 @@ head
             span.icon-bar
             |                     
             span.icon-bar
-          |                 
-          a.navbar-brand.topnav(href='#') #{site.name}
+          |   
+          if(site)              
+            a.navbar-brand.topnav(href='#') #{site.name}
+          else
+            a.navbar-brand.topnav(href='#') Site Name
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
@@ -56,10 +59,14 @@ head
         .row
           .col-lg-12
             .intro-message
-              h1 #{site.name}
-              |                         
-              h3 #{site.tagLine}
-              |                         
+              if(site)
+                h1 #{site.name}
+                |                         
+                h3 #{site.tagLine}
+              else
+                h1 Your Site Name
+                |                         
+                h3 Your Site Tagline                
               hr.intro-divider
               |                         
               ul.list-inline.intro-social-buttons
