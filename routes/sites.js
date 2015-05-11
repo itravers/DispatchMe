@@ -14,6 +14,11 @@ module.exports = function(app, passport) {
   // a User is trying to make a new site
   app.post('/site/create', function(req, res){
     var siteName = req.body.siteName;
+    if(req.body.facebookShare == 'on'){
+      facebookShare = true;
+    }else{
+      facebookShare = false;
+    }
     if(req.body.Facebook == 'on'){
       facebookLogin = true;
     }else{
@@ -52,7 +57,7 @@ module.exports = function(app, passport) {
                                                {name: "Google", value: googleLogin}]
                                     },
                                     {name: "AvailableSocialServices",
-                                      configs: [{name: "Facebook", value: true}]
+                                      configs: [{name: "Facebook", value: facebookShare}]
                                      }];
         newSite.save(function(err) {// save the new site to the database.
             if (err){//error adding new site
