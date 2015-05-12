@@ -6,7 +6,7 @@ html
     |     
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     // load bootstrap css
-    link(rel='stylesheet', href='/font-awesome/4.0.3/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
     // load fontawesome
     style.
       body        { padding-top:80px; }
@@ -38,6 +38,19 @@ html
             |             
             input.form-control(type='text', name='MainTitle', placeholder="The Main Header/Title")
           .form-group.col-lg-12
+            label Template - 
+              label.chosenTemplate #{sites[0].templateFile}
+              .templateChooser
+                .mid
+                  img(src=sites[0].thumbnail)
+                ul
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
+          .form-group.col-lg-12
             label Tag Line
             |             
             input.form-control(type='text', name='TagLine', placeholder="The Tag Line under your Main Header")
@@ -52,38 +65,37 @@ html
           .form-group.col-lg-12
             label Services Paragraph
             |             
-            input.form-control(type='textBox', name='ServicesParagraph', placeholder="Write a Paragraph about your services.")
+            input.form-control(type='textBox', name='ServicesParagraph', placeholder="Write a Paragraph about your services")
+          .form-group.col-lg-6
+            i.fa.fa-facebook.fa-fw
+            label Facebook Link
+            |             
+            input.form-control(type='url', name='FacebookLink', placeholder="Link to a Facebook Account")
+          .form-group.col-lg-6
+            i.fa.fa-twitter.fa-fw
+            label Twitter Link
+              
+            |             
+            input.form-control(type='url', name='TwitterLink', placeholder="Link to a Twitter Account")
+          .form-group.col-lg-6
+            i.fa.fa-google-plus.fa-fw
+            label Google+ Link
+            |             
+            input.form-control(type='url', name='GoogleLink', placeholder="Link to a Google+ Account")
+          .form-group.col-lg-6
+            i.fa.fa-linked-in.fa-fw
+            label Linked-In Link
+            |             
+            input.form-control(type='url', name='LinkedinLink', placeholder="Link to a Linked-In Account")
+          .form-group.col-lg-6
+            i.fa.fa-github.fa-fw
+            label Github Link
+            |             
+            input.form-control.fa-github(type='url', name='GithubLink', placeholder="Link to a Github Account")
           | 
-          .form-group
-            label Template - 
-              label.chosenTemplate #{sites[0].templateFile}
-              .templateChooser
-                .mid
-                  img(src=sites[0].thumbnail, style='width:600px;')
-                ul
-                  each site in sites
-                    li
-                      img(src=site.thumbnail, style="width:200px; height:118px;", value=site.templateFile)
-                  each site in sites
-                    li
-                      img(src=site.thumbnail, style="width:200px; height:118px;", value=site.templateFile)
-          .form-group
-            label Allowed Social Logins
-            br
-            input(type='checkBox', name="Facebook")             
-            label  Facebook
-             br
-            input(type='checkBox', name="Twitter")             
-            label  Twitter
-             br
-            input(type='checkBox', name="Google")             
-            label  Google+
-           .form-group
-            label Allowed Sharing Services
-            br
-            input(type='checkBox', name="FacebookShare")             
-            label  Facebook
-          button.btn.btn-warning.btn-lg(type='submit') Signup
+          .form-group.col-lg-12
+            button.btn.btn-warning.btn-lg(type='submit') Signup
+              
         |     
         hr
         |     
