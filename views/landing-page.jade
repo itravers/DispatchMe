@@ -43,7 +43,7 @@ block site
     // Custom CSS
     link(href='/stylesheets/landing-page.css', rel='stylesheet')
     // Custom Fonts
-    link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
     |     
     link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic', rel='stylesheet', type='text/css')
   body
@@ -148,25 +148,25 @@ block site
     .banner
       .container
         .row
-          .col-lg-6
+          .col-lg-8
             h2 Contact Us
           |                 
-          .col-lg-6
+          .col-lg-8.pull-right
             form(action='/site/contactus', method='post')
               input(type="hidden", name="_csrf", value=csrfToken)
-              .form-group.col-lg-6
+              .form-group.col-lg-4
                 label Name
                 |             
                 input.form-control(type='text', name='name', placeholder="Your name")
-              .form-group.col-lg-6
+              .form-group.col-lg-4
                 label E-Mail
                 |             
                 input.form-control(type='email', name='email', placeholder="Your Email")
-              .form-group.col-lg-12
+              .form-group.col-lg-8
                 label Message
                 |             
                 textArea.form-control(type='textBox', name='message', placeholder="Type Your Message Here")
-              .form-group.col-lg-12
+              .form-group.col-lg-8
                 button.btn.btn-default.btn-med.pull-right(type='submit') Submit
       // /.container
     // /.banner
