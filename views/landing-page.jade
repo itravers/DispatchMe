@@ -148,26 +148,26 @@ block site
     .banner
       .container
         .row
-          .col-lg-8
+          .col-lg-16
             h2 Contact Us
           |                 
-          .col-lg-8.pull-right
+          .col-lg-16
             form(action='/site/contactus', method='post')
               input(type="hidden", name="_csrf", value=csrfToken)
-              .form-group.col-lg-4
+              .form-group.col-lg-6
                 label Name
                 |             
                 input.form-control(type='text', name='name', placeholder="Your name")
-              .form-group.col-lg-4
+              .form-group.col-lg-6
                 label E-Mail
                 |             
                 input.form-control(type='email', name='email', placeholder="Your Email")
-              .form-group.col-lg-8
+              .form-group.col-lg-12
                 label Message
                 |             
                 textArea.form-control(type='textBox', name='message', placeholder="Type Your Message Here")
-              .form-group.col-lg-8
-                button.btn.btn-default.btn-med.pull-right(type='submit') Submit
+              .form-group.col-lg-2
+                button.btn.btn-default.btn-sm(type='submit') Submit
       // /.container
     // /.banner
     // Footer
