@@ -26,16 +26,33 @@ html
           each site in sites
             p #{site.label}
         
-        form(action='/site/create', method='post')
+        form.col-lg-12(action='/site/create', method='post')
           input(type="hidden", name="_csrf", value=csrfToken)
           input.templateFileInput(type="hidden", name="templateFile", value=sites[0].templateFile)
-          .form-group
+          .form-group.col-lg-6
             label Site Name
             |             
-            input.form-control(type='text', name='siteName')
-            label Site Tagline
+            input.form-control(type='text', name='siteName', placeholder="Your new Sites Name")
+          .form-group.col-lg-6
+            label Main Title
             |             
-            input.form-control(type='text', name='tagLine')
+            input.form-control(type='text', name='MainTitle', placeholder="The Main Header/Title")
+          .form-group.col-lg-12
+            label Tag Line
+            |             
+            input.form-control(type='text', name='TagLine', placeholder="The Tag Line under your Main Header")
+          .form-group.col-lg-6
+            label Services Heading
+            |             
+            input.form-control(type='text', name='ServicesHeading', placeholder="The Main Heading of your Service Section")
+          .form-group.col-lg-6
+            label Services Sub-Heading
+            |             
+            input.form-control(type='text', name='ServicesSubheading', placeholder="The Main Sub-Heading of your Service Section")
+          .form-group.col-lg-12
+            label Services Paragraph
+            |             
+            input.form-control(type='textBox', name='ServicesParagraph', placeholder="Write a Paragraph about your services.")
           | 
           .form-group
             label Template - 
@@ -44,6 +61,9 @@ html
                 .mid
                   img(src=sites[0].thumbnail, style='width:600px;')
                 ul
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:200px; height:118px;", value=site.templateFile)
                   each site in sites
                     li
                       img(src=site.thumbnail, style="width:200px; height:118px;", value=site.templateFile)
