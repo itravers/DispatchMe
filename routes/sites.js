@@ -3,14 +3,39 @@ module.exports = function(app, passport) {
   
 //load up the Site model
   var Site              = require('../models/site');
+  var ProtoSite              = require('../models/proto-site');
   var FormElement       = require('../models/formElement');
 
 // normal routes ===============================================================
 
   // show the home page (will also have our login links)
   app.get('/site', isLoggedIn, function(req, res) {
+    ProtoSite.find({}, {}, function(err, sites) {
+      var errors = [];
+      if (err){ // if there are any errors, return the error to createSite.jade to be displayed to user
+        errors.push(err);
+        res.render('createSite.jade',
+                   {message: errors,
+                    csrfToken: req.csrfToken()}
+        );
+      }
+      if (!sites){ //No site was found by this name, lets create one.
+    
+        
+      }else{
+        console.log("Rendering Site: " + sites);
+        res.render('createSite.jade',
+            {csrfToken: req.csrfToken(),
+             sites: sites}
+         );
+      }
+      
+        
+  });
+    
+    
     //possibly create a new site here?
-    res.render('createSite.jade', {csrfToken: req.csrfToken()});
+   // res.render('createSite.jade', {csrfToken: req.csrfToken()});
   });
   
   // a User is trying to make a new site
@@ -39,7 +64,7 @@ module.exports = function(app, passport) {
     }
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
     var owner = req.user;
-    Site.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
+    ProtoSite.findOne({ 'name' :  regexSiteName }, "name configCategories", function(err, site) {
       var errors = [];
       if (err){ // if there are any errors, return the error to createSite.jade to be displayed to user
         errors.push(err);
@@ -50,7 +75,7 @@ module.exports = function(app, passport) {
       }
       if (!site){ //No site was found by this name, lets create one.
         console.log("User " + owner + " is creating new site " + siteName);
-        var newSite            = new Site();
+        var newSite            = new ProtoSite();
         
         var formElement        = new FormElement();
         formElement.name = "MainTitle";
