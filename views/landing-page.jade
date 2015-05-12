@@ -1,12 +1,15 @@
 block site
   //we are going to put all formElements into their own variables
-  - var MainTitle = 'Demo Site';
-  - var TagLine = 'This is the TagLine';
+  - var MainTitle;// = 'Demo Site';
+  - var TagLine;// = 'This is the TagLine';
+  - var TwitterLink;// = 'http://twitter.com';
   each element in site.formElements
     if(element.name == 'MainTitle') 
       - MainTitle = element.value;
     if(element.name == 'TagLine') 
       - TagLine = element.value;
+    if(element.name == 'TwitterLink') 
+      - TwitterLink = element.value;
   head
     meta(charset='utf-8')
     |     
@@ -17,8 +20,9 @@ block site
     meta(name='description', content='')
     |     
     meta(name='author', content='')
-    |     
-    title #{MainTitle}
+    |  
+    if(MainTitle)   
+      title #{MainTitle}
     // Bootstrap Core CSS
     link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
     // Custom CSS
@@ -68,9 +72,10 @@ block site
           .col-lg-12
             .intro-message
               if(site)
-                h1 #{MainTitle}
-                |                         
-                h3 #{TagLine}
+                if(MainTitle)
+                  h1 #{MainTitle}
+                if(TagLine)                         
+                  h3 #{TagLine}
               else
                 h1 Your Site Name
                 |                         
@@ -78,12 +83,13 @@ block site
               hr.intro-divider
               |                         
               ul.list-inline.intro-social-buttons
-                li
-                  a.btn.btn-default.btn-lg(href='https://twitter.com/SBootstrap')
-                    i.fa.fa-twitter.fa-fw
-                    |  
-                    span.network-name Twitter
-                |                             
+                if(TwitterLink)
+                  li
+                    a.btn.btn-default.btn-lg(href=TwitterLink)
+                      i.fa.fa-twitter.fa-fw
+                      |  
+                      span.network-name Twitter
+                  |                             
                 li
                   a.btn.btn-default.btn-lg(href='https://github.com/IronSummitMedia/startbootstrap')
                     i.fa.fa-github.fa-fw
@@ -178,12 +184,13 @@ block site
           |                 
           .col-lg-6
             ul.list-inline.banner-social-buttons
-              li
-                a.btn.btn-default.btn-lg(href='https://twitter.com/SBootstrap')
-                  i.fa.fa-twitter.fa-fw
-                  |  
-                  span.network-name Twitter
-              |                         
+              if(TwitterLink)
+                li
+                  a.btn.btn-default.btn-lg(href=TwitterLink)
+                    i.fa.fa-twitter.fa-fw
+                    |  
+                    span.network-name Twitter
+                |                         
               li
                 a.btn.btn-default.btn-lg(href='https://github.com/IronSummitMedia/startbootstrap')
                   i.fa.fa-github.fa-fw
