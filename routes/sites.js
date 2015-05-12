@@ -87,10 +87,31 @@ module.exports = function(app, passport) {
         formElement5.label = "Facebook Link";
         formElement5.explaination = "A Link to your Facebook page.";
         
+        var formElement6        = new FormElement();
+        formElement6.name = "ServicesHeading";
+        formElement6.value = "Free Contact Pages for";
+        formElement6.type = "text";
+        formElement6.label = "Services Heading";
+        formElement6.explaination = "The Heading to your 'Service' Section.";
+        
+        var formElement7        = new FormElement();
+        formElement7.name = "ServicesSubheading";
+        formElement7.value = "Your Business";
+        formElement7.type = "text";
+        formElement7.label = "Services Subheading";
+        formElement7.explaination = "The Subheading to your 'Service' Section.";
+        
+        var formElement8        = new FormElement();
+        formElement8.name = "ServicesParagraph";
+        formElement8.value = "We Offer a free professional grade contact page for your small business or organizations. Or, perhaps you would like a simpler way to keep in touch with the grandkids.";
+        formElement8.type = "text";
+        formElement8.label = "Services Paragraph";
+        formElement8.explaination = "A short paragraph explaining your services.";
+        
         newSite.name = siteName;
         newSite.templateFile = 'landing-page.jade';
         newSite.owners = [owner._id];
-        newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5];
+        newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5, formElement6, formElement7, formElement8];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},

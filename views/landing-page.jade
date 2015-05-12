@@ -5,6 +5,9 @@ block site
   - var TwitterLink;// = 'http://twitter.com';
   - var GithubLink;
   - var FacebookLink;
+  - var ServicesHeading;
+  - var ServicesSubheading;
+  - var ServicesParagraph;
   each element in site.formElements
     if(element.name == 'MainTitle') 
       - MainTitle = element.value;
@@ -16,6 +19,12 @@ block site
       - GithubLink = element.value;
     if(element.name == 'FacebookLink') 
       - FacebookLink = element.value;
+    if(element.name == 'ServicesHeading') 
+      - ServicesHeading = element.value;
+    if(element.name == 'ServicesSubheading') 
+      - ServicesSubheading = element.value;
+    if(element.name == 'ServicesParagraph') 
+      - ServicesParagraph = element.value;
   head
     meta(charset='utf-8')
     |     
@@ -61,10 +70,11 @@ block site
           ul.nav.navbar-nav.navbar-right
             li
               a(href='#about') About
-            |                     
-            li
-              a(href='#services') Services
-            |                     
+            |  
+            if(ServicesHeading)                   
+              li
+                a(href='#services') Services
+              |                     
             li
               a(href='#contact') Contact
         // /.navbar-collapse
@@ -113,27 +123,26 @@ block site
     // /.intro-header
     // Page Content
     a(name='services')
-    |     
+    |    
     .content-section-a
-      .container
-        .row
-          .col-lg-5.col-sm-6
-            hr.section-heading-spacer
-            |                     
-            .clearfix
-            |                     
-            h2.section-heading
-              | Death to the Stock Photo:
-              br
-              | Special Thanks
-            |                     
-            p.lead
-              | A special thanks to 
-              a(target='_blank', href='http://join.deathtothestockphoto.com/') Death to the Stock Photo
-              |  for providing the photographs that you see in this template. Visit their website to become a member.
-          |                 
-          .col-lg-5.col-lg-offset-2.col-sm-6
-            img.img-responsive(src='/img/ipad.png', alt='')
+      if(ServicesHeading)
+        .container
+          .row
+            .col-lg-5.col-sm-6
+              hr.section-heading-spacer
+              |                     
+              .clearfix
+              |                     
+              h2.section-heading
+                | #{ServicesHeading}
+                br
+                | #{ServicesSubheading}
+              |                     
+              p.lead
+                | #{ServicesParagraph}
+            |                 
+            .col-lg-5.col-lg-offset-2.col-sm-6
+              img.img-responsive(src='/img/ipad.png', alt='')
     a(name='contact')
     |     
     .banner
@@ -176,12 +185,13 @@ block site
                 a(href='#about') About
               |                         
               li.footer-menu-divider &sdot;
-              |                         
-              li
-                a(href='#services') Services
-              |                         
-              li.footer-menu-divider &sdot;
-              |                         
+              | 
+              if(ServicesHeading)                        
+                li
+                  a(href='#services') Services
+                |                         
+                li.footer-menu-divider &sdot;
+                |                         
               li
                 a(href='#contact') Contact
             |                     
