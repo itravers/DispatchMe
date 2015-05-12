@@ -1,4 +1,30 @@
-doctype html(lang='en')
+block site
+  //we are going to put all formElements into their own variables
+  - var MainTitle;// = 'Demo Site';
+  - var TagLine;// = 'This is the TagLine';
+  - var TwitterLink;// = 'http://twitter.com';
+  - var GithubLink;
+  - var FacebookLink;
+  - var ServicesHeading;
+  - var ServicesSubheading;
+  - var ServicesParagraph;
+  each element in site.formElements
+    if(element.name == 'MainTitle') 
+      - MainTitle = element.value;
+    if(element.name == 'TagLine') 
+      - TagLine = element.value;
+    if(element.name == 'TwitterLink') 
+      - TwitterLink = element.value;
+    if(element.name == 'GithubLink') 
+      - GithubLink = element.value;
+    if(element.name == 'FacebookLink') 
+      - FacebookLink = element.value;
+    if(element.name == 'ServicesHeading') 
+      - ServicesHeading = element.value;
+    if(element.name == 'ServicesSubheading') 
+      - ServicesSubheading = element.value;
+    if(element.name == 'ServicesParagraph') 
+      - ServicesParagraph = element.value;
 head
     meta(charset='utf-8')
     |     
