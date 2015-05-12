@@ -73,10 +73,24 @@ module.exports = function(app, passport) {
         formElement3.label = "Twitter Link";
         formElement3.explaination = "A Link to your twitter page.";
         
+        var formElement4        = new FormElement();
+        formElement4.name = "GithubLink";
+        formElement4.value = "https://github.com/chicosystem";
+        formElement4.type = "text";
+        formElement4.label = "Github Link";
+        formElement4.explaination = "A Link to your Github page.";
+        
+        var formElement5        = new FormElement();
+        formElement5.name = "FacebookLink";
+        formElement5.value = "https://facebook.com/itravers";
+        formElement5.type = "text";
+        formElement5.label = "Facebook Link";
+        formElement5.explaination = "A Link to your Facebook page.";
+        
         newSite.name = siteName;
         newSite.templateFile = 'landing-page.jade';
         newSite.owners = [owner._id];
-        newSite.formElements = [formElement, formElement2, formElement3];
+        newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},
@@ -165,7 +179,8 @@ module.exports = function(app, passport) {
       }else{
         console.log("Rendering Site: " + site);
         res.render(site.templateFile,
-            {site: site});
+            {site: site,
+              csrfToken: req.csrfToken()});
         //res.send({site: site});
       }
       
