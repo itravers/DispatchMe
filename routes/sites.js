@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
 // normal routes ===============================================================
 
   // show the home page (will also have our login links)
-  app.get('/site', isLoggedIn, function(req, res) {
+  app.get('/site', function(req, res) {
     //possibly create a new site here?
     res.render('createSite.jade', {csrfToken: req.csrfToken()});
   });

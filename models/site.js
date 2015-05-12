@@ -7,6 +7,7 @@ var siteSchema = mongoose.Schema({
   name              : String,
   tagLine           : String,
   templateFile      : String,
+  thumbnail         : String,
   configCategories  : { type : Array , "default" : [] },
   owners            : { type : Array , "default" : [] },//contains an array of owners
   formElements      : { type : Array , "default" : [] } //contains an array of form prototypes
