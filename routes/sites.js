@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
 // normal routes ===============================================================
 
   // show the home page (will also have our login links)
-  app.get('/site', function(req, res) {
+  app.get('/site', isLoggedIn, function(req, res) {
     //possibly create a new site here?
     res.render('createSite.jade', {csrfToken: req.csrfToken()});
   });
@@ -66,10 +66,17 @@ module.exports = function(app, passport) {
         formElement2.label = "Tag Line";
         formElement2.explaination = "The Tag Line of your new page.";
         
+        var formElement3        = new FormElement();
+        formElement3.name = "TwitterLink";
+        formElement3.value = "https://twitter.com/OurAutoDidact";
+        formElement3.type = "text";
+        formElement3.label = "Twitter Link";
+        formElement3.explaination = "A Link to your twitter page.";
+        
         newSite.name = siteName;
         newSite.templateFile = 'landing-page.jade';
         newSite.owners = [owner._id];
-        newSite.formElements = [formElement, formElement2];
+        newSite.formElements = [formElement, formElement2, formElement3];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},
