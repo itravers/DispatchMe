@@ -5,9 +5,11 @@ var mongoose = require('mongoose');
 // define the schema for our user model
 var siteSchema = mongoose.Schema({
   name              : String,
-  tagLine               : String,
+  tagLine           : String,
+  templateFile      : String,
   configCategories  : { type : Array , "default" : [] },
-  owners            : { type : Array , "default" : [] }
+  owners            : { type : Array , "default" : [] },//contains an array of owners
+  formElements      : { type : Array , "default" : [] } //contains an array of form prototypes
 });
 
 // methods ======================

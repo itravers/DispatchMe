@@ -2,7 +2,8 @@ module.exports = function(app, passport) {
   var mongoose = require('mongoose');
   
 //load up the Site model
-  var Site       = require('../models/site');
+  var Site              = require('../models/site');
+  var FormElement       = require('../models/formElement');
 
 // normal routes ===============================================================
 
@@ -50,9 +51,25 @@ module.exports = function(app, passport) {
       if (!site){ //No site was found by this name, lets create one.
         console.log("User " + owner + " is creating new site " + siteName);
         var newSite            = new Site();
+        
+        var formElement        = new FormElement();
+        formElement.name = "MainTitle";
+        formElement.value = siteName;
+        formElement.type = "text";
+        formElement.label = "Main Title";
+        formElement.explaination = "The Main Title/Header of your new page.";
+        
+        var formElement2        = new FormElement();
+        formElement2.name = "TagLine";
+        formElement2.value = tagLine;
+        formElement2.type = "text";
+        formElement2.label = "Tag Line";
+        formElement2.explaination = "The Tag Line of your new page.";
+        
         newSite.name = siteName;
-        newSite.tagLine = tagLine;
+        newSite.templateFile = 'landing-page.jade';
         newSite.owners = [owner._id];
+        newSite.formElements = [formElement, formElement2];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},
@@ -93,54 +110,40 @@ module.exports = function(app, passport) {
   });
   
   app.get('/site/demo/:siteName', function(req, res){
+    /*
     var siteName = req.params.siteName;
     var fs = require('fs');
-    
     var Grid = require('gridfs-stream');
     Grid.mongo = mongoose.mongo;
-   // mongoose.connect('mongodb://127.0.0.1/DispatchMe');
     var conn = mongoose.connection;
-        console.log('open');
-        var gfs = Grid(conn.db);
-     
-      //write content to file system
-       // var fs_write_stream = fs.createWriteStream('write.txt');
+    console.log('open');
+    var gfs = Grid(conn.db);
          
-        //read from mongodb
-        var readstream = gfs.createReadStream({
-             filename: 'views/'+siteName+'.jade'
-        });
+    //read from mongodb
+    var readstream = gfs.createReadStream({
+         filename: 'views/'+siteName+'.jade'
+    });
         
-        var buffers = [];
-        readstream.on('data', function(buffer) {
-          buffers.push(buffer);
-        });
-        readstream.on('end', function() {
-          var buffer = Buffer.concat(buffers);
-          //...do your stuff...
-         // console.log("here is the buffer " + buffer);
-          var jade = require('jade');
-          var fn = jade.compile(buffer);
-          var html = fn();
-          console.log("here is the html " + html);
-          res.status('200').send(html);
-        });
-          
-        
-        
-       // readstream.pipe(fs_write_stream);
-       // fs_write_stream.on('close', function () {
-        //     console.log('file has been written fully!');
-       // });
-      //});
- 
+    var buffers = [];
+    readstream.on('data', function(buffer) {
+      buffers.push(buffer);
+    });
+    readstream.on('end', function() {
+      var buffer = Buffer.concat(buffers);
+      var jade = require('jade');
+      var fn = jade.compile(buffer);
+      var html = fn();
+      console.log("here is the html " + html);
+      res.status('200').send(html);
+    });
+ */
   });
   
   // INDIVIDUAL SITES =========================
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
-    Site.findOne({ 'name' :  regexSiteName }, "name tagLine configCategories", function(err, site) {
+    Site.findOne({ 'name' :  regexSiteName }, "name tagLine configCategories templateFile owners formElements", function(err, site) {
       var errors = [];
       // if there are any errors, return the error
       if (err){
@@ -154,8 +157,9 @@ module.exports = function(app, passport) {
         res.send({message: "That site was not found"});
       }else{
         console.log("Rendering Site: " + site);
-        res.render('site2.jade',
+        res.render(site.templateFile,
             {site: site});
+        //res.send({site: site});
       }
       
         
