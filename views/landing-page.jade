@@ -8,6 +8,8 @@ block site
   - var ServicesHeading;
   - var ServicesSubheading;
   - var ServicesParagraph;
+  - var LinkedinLink;
+  - var GoogleLink;
   each element in site.formElements
     if(element.name == 'MainTitle') 
       - MainTitle = element.value;
@@ -25,6 +27,10 @@ block site
       - ServicesSubheading = element.value;
     if(element.name == 'ServicesParagraph') 
       - ServicesParagraph = element.value;
+    if(element.name == 'LinkedinLink') 
+      - LinkedinLink = element.value;
+    if(element.name == 'GoogleLink') 
+      - GoogleLink = element.value;
   head
     meta(charset='utf-8')
     |     
@@ -116,9 +122,21 @@ block site
                 if(FacebookLink)                           
                   li
                     a.btn.btn-default.btn-lg(href=FacebookLink)
-                      i.fa.fa-linkedin.fa-fw
+                      i.fa.fa-facebook.fa-fw
                       |  
                       span.network-name Facebook
+                if(GoogleLink)                    
+                  li
+                    a.btn.btn-default.btn-lg(href=GoogleLink)
+                      i.fa.fa-google-plus.fa-fw
+                      |  
+                      span.network-name Google+
+                if(LinkedinLink)                    
+                  li
+                    a.btn.btn-default.btn-lg(href=LinkedinLink)
+                      i.fa.fa-linked-in.fa-fw
+                      |  
+                      span.network-name Linked-In
       // /.container
     // /.intro-header
     // Page Content

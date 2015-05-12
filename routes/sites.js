@@ -108,10 +108,25 @@ module.exports = function(app, passport) {
         formElement8.label = "Services Paragraph";
         formElement8.explaination = "A short paragraph explaining your services.";
         
+        var formElement9        = new FormElement();
+        formElement9.name = "GoogleLink";
+        formElement9.value = "https://google.com/itravers";
+        formElement9.type = "text";
+        formElement9.label = "Google Link";
+        formElement9.explaination = "A Link to your Google page.";
+        
+        var formElement10        = new FormElement();
+        formElement10.name = "LinkedinLink";
+        formElement10.value = "https://linkedin.com/itravers";
+        formElement10.type = "text";
+        formElement10.label = "Linked-In Link";
+        formElement10.explaination = "A Link to your Linked-In page.";
+        
         newSite.name = siteName;
+        newSite.email = "isaac.a.travers@gmail.com";
         newSite.templateFile = 'gray-scale.jade';
         newSite.owners = [owner._id];
-        newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5, formElement6, formElement7, formElement8];
+        newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5, formElement6, formElement7, formElement8, formElement9, formElement10];
         newSite.configCategories = [{name: "AvailableLoginServices",
                                      configs: [{name: "Facebook", value: facebookLogin},
                                                {name: "DispatchMyself", value: true},
@@ -185,7 +200,7 @@ module.exports = function(app, passport) {
   app.get('/site/:siteName', function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
-    Site.findOne({ 'name' :  regexSiteName }, "name tagLine configCategories templateFile owners formElements", function(err, site) {
+    Site.findOne({ 'name' :  regexSiteName }, "name email tagLine configCategories templateFile owners formElements", function(err, site) {
       var errors = [];
       // if there are any errors, return the error
       if (err){
