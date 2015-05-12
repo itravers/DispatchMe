@@ -109,7 +109,7 @@ module.exports = function(app, passport) {
         formElement8.explaination = "A short paragraph explaining your services.";
         
         newSite.name = siteName;
-        newSite.templateFile = 'landing-page.jade';
+        newSite.templateFile = 'gray-scale.jade';
         newSite.owners = [owner._id];
         newSite.formElements = [formElement, formElement2, formElement3, formElement4, formElement5, formElement6, formElement7, formElement8];
         newSite.configCategories = [{name: "AvailableLoginServices",
