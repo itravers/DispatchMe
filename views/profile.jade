@@ -19,7 +19,24 @@ html
         |         
         a.btn.btn-default.btn-sm(href='/logout') Logout
         a.btn.btn-default.btn-sm(href='/site') Site
-      |     
+      |  
+      .row
+        // Site List
+        .col-sm-6
+          .well
+            h3.text-info
+              span.glyphicon.glyphicon-info-sign
+            div
+              table.table
+                tbody
+                  each site in sites
+                    tr
+                      td #{site.name} 
+                      td 
+                        a(href='/site/#{site.name}') /site/#{site.name} 
+                      td 
+                        a.btn.btn-default.btn-xs.pull-right(href='/site/edit/#{site.name}') Edit
+                          span.glyphicon.glyphicon-pencil
       .row
         // LOCAL INFORMATION
         .col-sm-6
@@ -123,12 +140,4 @@ html
               a.btn.btn-danger(href='/connect/google') Connect Google
               |  Google+
             // check if the user has this token (is the user authenticated with this social account)
-      if(user.permissions.sitewide == "GOD")
-        .row
-        // TWITTER INFORMATION
-        .col-sm-12
-          .well
-            h3.text-info
-              span.glyphicon.glyphicon-cog
-            if(user.twitter.token)
-              p
+        
