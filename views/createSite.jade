@@ -11,7 +11,7 @@ html
     style.
       body        { padding-top:80px; }
   body
-    p #{sites}
+    p #{JSON.stringify(sites)}
     .container
       .col-sm-6.col-sm-offset-3
         h1
@@ -28,6 +28,7 @@ html
         
         form(action='/site/create', method='post')
           input(type="hidden", name="_csrf", value=csrfToken)
+          input.templateFileInput(type="hidden", name="templateFile", value=sites[0].templateFile)
           .form-group
             label Site Name
             |             
@@ -38,17 +39,14 @@ html
           | 
           .form-group
             label Template - 
-              label.chosenTemplate gray-scale.jade
+              label.chosenTemplate #{sites[0].templateFile}
               .templateChooser
                 .mid
-                  img(src='/img/gray-scale-thumb.jpg', style='width:600px;')
+                  img(src=sites[0].thumbnail, style='width:600px;')
                 ul
-                  li
-                    img(src='/img/gray-scale-thumb.jpg', style="width:200px; height:118px;", value="gray-scale.jade")
-                  li
-                    img(src='/img/landing-page-thumb.jpg', style="width:200px; height:118px;", value="landing-page.jade")
-                  li
-                    img(src='/img/landing-page-thumb.jpg', style="width:200px; height:118px;", value="landing-page.jade")
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:200px; height:118px;", value=site.templateFile)
           .form-group
             label Allowed Social Logins
             br
@@ -86,5 +84,7 @@ html
 
         $(".templateChooser img").click(function() {
             $(".templateChooser .mid img").attr("src", $(this).attr("src"));
+            $(".chosenTemplate").html($(this).attr("value"));
+            $(".templateFileInput").attr("value", $(this).attr("value"));
         });
       });
