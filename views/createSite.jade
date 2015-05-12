@@ -28,6 +28,7 @@ html
         form.col-lg-12(action='/site/create', method='post')
           input(type="hidden", name="_csrf", value=csrfToken)
           input.templateFileInput(type="hidden", name="templateFile", value=sites[0].templateFile)
+          input.thumbnailInput(type="hidden", name="thumbnail", value=sites[0].thumbnail)
           .form-group.col-lg-6
             label Site Name
             |             
@@ -45,10 +46,7 @@ html
                 ul
                   each site in sites
                     li
-                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
-                  each site in sites
-                    li
-                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile)
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile, thumbnail=site.thumbnail)
           .form-group.col-lg-12
             label Tag Line
             |             
@@ -122,5 +120,6 @@ html
             $(".templateChooser .mid img").attr("src", $(this).attr("src"));
             $(".chosenTemplate").html($(this).attr("value"));
             $(".templateFileInput").attr("value", $(this).attr("value"));
+            $(".thumbnailInput").attr("value", $(this).attr("thumbnail"));
         });
       });
