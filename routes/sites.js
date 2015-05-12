@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
   });
   
   // a User is trying to make a new site
-  app.post('/site/create', function(req, res){
+  app.post('/site/create', isLoggedIn, function(req, res){
     var siteName = req.body.siteName;
     var tagLine = req.body.tagLine;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
@@ -193,7 +193,7 @@ module.exports = function(app, passport) {
  */
   });
   
-  app.post('/site/edit/:siteName', function(req, res){
+  app.post('/site/edit/:siteName', isLoggedIn, function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
     var formElements = [];
@@ -291,7 +291,7 @@ module.exports = function(app, passport) {
    // res.send({message : "editing Site " + siteName, body: req.body});
   });
   
-  app.get('/site/edit/:siteName', function(req, res){
+  app.get('/site/edit/:siteName', isLoggedIn, function(req, res){
     var siteName = req.params.siteName;
     var regexSiteName = new RegExp(["^",siteName,"$"].join(""),"i"); //ignore capitalization
     ProtoSite.find({}, {}, function(err, sites) {
