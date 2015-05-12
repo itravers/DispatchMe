@@ -1,0 +1,150 @@
+doctype html
+// views/signup.ejs
+html
+    //we are going to put all formElements into their own variables
+  - var MainTitle;// = 'Demo Site';
+  - var TagLine;// = 'This is the TagLine';
+  - var TwitterLink;// = 'http://twitter.com';
+  - var GithubLink;
+  - var FacebookLink;
+  - var ServicesHeading;
+  - var ServicesSubheading;
+  - var ServicesParagraph;
+  - var LinkedinLink;
+  - var GoogleLink;
+  each element in thisSite.formElements
+    if(element.name == 'MainTitle') 
+      - MainTitle = element.value;
+    if(element.name == 'TagLine') 
+      - TagLine = element.value;
+    if(element.name == 'TwitterLink') 
+      - TwitterLink = element.value;
+    if(element.name == 'GithubLink') 
+      - GithubLink = element.value;
+    if(element.name == 'FacebookLink') 
+      - FacebookLink = element.value;
+    if(element.name == 'ServicesHeading') 
+      - ServicesHeading = element.value;
+    if(element.name == 'ServicesSubheading') 
+      - ServicesSubheading = element.value;
+    if(element.name == 'ServicesParagraph') 
+      - ServicesParagraph = element.value;
+    if(element.name == 'LinkedinLink') 
+      - LinkedinLink = element.value;
+    if(element.name == 'GoogleLink') 
+      - GoogleLink = element.value;
+  head
+    title Edit Site | #{thisSite.name}
+    |     
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    // load bootstrap css
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
+    // load fontawesome
+    style.
+      body        { padding-top:80px; }
+  body
+    .container
+      .col-sm-6.col-sm-offset-3
+        h1
+          span.fa.fa-sign-in
+            p  Edit Site | #{thisSite.name}
+        if(message)
+          if(message.length > 0)
+            .alert.alert-danger #{message}
+        form.col-lg-12(action='/site/edit/#{thisSite.name}', method='post')
+          input(type="hidden", name="_csrf", value=csrfToken)
+          input.templateFileInput(type="hidden", name="templateFile", value=thisSite.templateFile)
+          input.thumbnailInput(type="hidden", name="thumbnail", value=thisSite.thumbnail)
+          .form-group.col-lg-6
+            label Site Name
+            |             
+            input.form-control(type='text', name='siteName', placeholder="Your new Sites Name", value="#{thisSite.name}")
+          .form-group.col-lg-6
+            label Main Title
+            |             
+            input.form-control(type='text', name='MainTitle', placeholder="The Main Header/Title", value="#{MainTitle}")
+          .form-group.col-lg-12
+            label Template - 
+              label.chosenTemplate #{thisSite.templateFile}
+              .templateChooser
+                .mid
+                  img(src=thisSite.thumbnail)
+                ul
+                  each site in sites
+                    li
+                      img(src=site.thumbnail, style="width:170px; height:100px;", value=site.templateFile, thumbnail=site.thumbnail)
+          .form-group.col-lg-12
+            label Tag Line
+            |             
+            input.form-control(type='text', name='TagLine', placeholder="The Tag Line under your Main Header", value="#{TagLine}")
+          .form-group.col-lg-6
+            label Services Heading
+            |             
+            input.form-control(type='text', name='ServicesHeading', placeholder="The Main Heading of your Service Section", value="#{ServicesHeading}")
+          .form-group.col-lg-6
+            label Services Sub-Heading
+            |             
+            input.form-control(type='text', name='ServicesSubheading', placeholder="The Main Sub-Heading of your Service Section", value="#{ServicesSubheading}")
+          .form-group.col-lg-12
+            label Services Paragraph
+            |             
+            input.form-control(type='textBox', name='ServicesParagraph', placeholder="Write a Paragraph about your services", value="#{ServicesParagraph}")
+          .form-group.col-lg-6
+            i.fa.fa-facebook.fa-fw
+            label Facebook Link
+            |             
+            input.form-control(type='url', name='FacebookLink', placeholder="Link to a Facebook Account", value="#{FacebookLink}")
+          .form-group.col-lg-6
+            i.fa.fa-twitter.fa-fw
+            label Twitter Link
+              
+            |             
+            input.form-control(type='url', name='TwitterLink', placeholder="Link to a Twitter Account", value="#{TwitterLink}")
+          .form-group.col-lg-6
+            i.fa.fa-google-plus.fa-fw
+            label Google+ Link
+            |             
+            input.form-control(type='url', name='GoogleLink', placeholder="Link to a Google+ Account", value="#{GoogleLink}")
+          .form-group.col-lg-6
+            i.fa.fa-linked-in.fa-fw
+            label Linked-In Link
+            |             
+            input.form-control(type='url', name='LinkedinLink', placeholder="Link to a Linked-In Account", value="#{LinkedinLink}")
+          .form-group.col-lg-6
+            i.fa.fa-github.fa-fw
+            label Github Link
+            |             
+            input.form-control.fa-github(type='url', name='GithubLink', placeholder="Link to a Github Account", value="#{GithubLink}")
+          .form-group.col-lg-6
+            span.glyphicon-envelope
+            label Email to Notify
+            |             
+            input.form-control.fa-github(type='email', name='email', placeholder="Email Contact Page will Notify", value="#{thisSite.email}")
+          | 
+          .form-group.col-lg-12
+            button.btn.btn-warning.btn-lg(type='submit') Edit Site
+        |     
+        hr
+        |     
+        p
+          | Or go 
+          a(href='/') home
+          | 
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/jcarousellite.min.js')
+    script(type='text/javascript').
+      $(function() {
+        $(".templateChooser").jCarouselLite({
+          btnNext: ".widget .next",
+          btnPrev: ".widget .prev",
+          speed: 800,
+          easing: "backout"
+        });
+
+        $(".templateChooser img").click(function() {
+            $(".templateChooser .mid img").attr("src", $(this).attr("src"));
+            $(".chosenTemplate").html($(this).attr("value"));
+            $(".templateFileInput").attr("value", $(this).attr("value"));
+            $(".thumbnailInput").attr("value", $(this).attr("thumbnail"));
+        });
+      });
